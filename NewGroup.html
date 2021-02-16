@@ -5,13 +5,15 @@
     <title> New Group </title>
     <link rel="stylesheet" href="css/style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
 <body class = "fullscreen">
-    <button onclick="myFunction()">Generate group code</button>
+    <button onclick="myFunction(this)">Generate group code</button>
     <p id="demo"></p>
     <script>
-        function myFunction() {
+        function myFunction(button) {
         var x = document.getElementById("demo")
         x.innerHTML = Math.floor((Math.random() * 8999) + 1000);
+        button.style.visibility = "hidden";
         }
     </script>
     //save "demo" as User's group tag
