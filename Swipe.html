@@ -72,15 +72,6 @@
       <div class="swiper-slide">Slide 8</div>
       <div class="swiper-slide">Slide 9</div>
       <div class="swiper-slide">Slide 10</div>
-      <div class="swiper-slide">NO</div>
-      <div class="swiper-slide">YES</div>
-    </div>
-    <!-- Add Pagination -->
-    <div class="swiper-pagination"></div>
-    <!-- Add Navigation -->
-    <div class="swiper-button-prev"></div>
-    <div class="swiper-button-next"></div>
-  </div>
 
   <!-- Swiper JS -->
   <script src="../package/swiper-bundle.min.js"></script>
@@ -99,17 +90,16 @@
         init: function (swiper) {
           if (!swiper.params.debugger) return;
           console.log('init');
-          
+          Right = false;
         },
         touchMove: function (swiper, touchmove){
             if(!swiper.params.debugger) return;
-            console.log('SliderMove');
             direction = swiper.touches.diff;
             current_Index = swiper.activeIndex;
             last_Index = swiper.previousIndex;
             if(direction < 0){
             console.log('Left');
-            right = false;
+            Right = false;
             };
             if(direction > 0){
             console.log('Right');
@@ -117,9 +107,12 @@
             };
         },
         touchEnd: function(swiper, touchEnd){
-            if(right = true)
-            swiper.slideNext(40,true);
-        },
+          console.log(Right);
+          if(Right === true){
+            swiper.slideNext(100,true);
+            }
+            Right = false;
+      },
         slideChange: function (swiper) {
           if (!swiper.params.debugger) return;
           console.log('slideChange', this.previousIndex, '->', this.activeIndex);
