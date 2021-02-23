@@ -1,5 +1,6 @@
 body {
-  font-family: sans-serif;
+    font-family: sans-serif;
+    text-align: center;
 }
 
 /* Make content area fill the entire browser window */
@@ -15,16 +16,90 @@ html,
 
 .title {
     font-size: 3rem;
-    color: blue;
+    color: slategrey;
+    text-align: center;
 }
 
-.temptext {
+.testertext {
     font-size: 2rem;
-    color: green;
+    color: red;
     
 }
 
-.start {
-    font-size: 4rem;
-    color: red;
+.movingon {
+  display: block;
+  border-radius: 4px;
+  background-color: slategray;
+  border: 2px solid black;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 28px;
+  padding: 20px;
+  width: 400px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+  position: relative;
+  top: 10%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.movingon span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.movingon span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.movingon:hover span {
+  padding-right: 25px;
+}
+
+.movingon:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+
+
+.codegen {
+  display: block;
+  border-radius: 4px;
+  background-color: black;
+  border: 2px solid black;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 32px;
+  padding: 20px;
+  width: 400px;
+  cursor: pointer;
+  margin: 5px;
+  position: relative;
+  top: 10%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+
+.container { 
+  height: 800px;
+  position: relative;
+  border: 3px transparent black; 
+}
+
+
+form {
+    display: inline-block;
+    font-size: 24px;
 }
