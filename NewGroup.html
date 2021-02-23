@@ -4,25 +4,25 @@
     <meta charset="utf-8">
     <title> New Group </title>
     <link rel="stylesheet" href="css/style.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">    
 <body class = "fullscreen">
-    <button onclick="myFunction(this)">Generate group code</button>
-    <p id="demo"></p>
-    <script>
-        function myFunction(button) {
-        var x = document.getElementById("demo")
-        x.innerHTML = Math.floor((Math.random() * 8999) + 1000);
-        button.style.visibility = "hidden";
-        }
-    </script>
-    //save "demo" as User's group tag
-    <form id="NewUser">
-        <p><label>Enter your name: <input name="name" /></label></p>
-    </form>
-    <li><a href="Swipe.html"><button type="button">START</button></a></li>
-    //on START save the name input as User's name tag
-    <li><a href="index.html"><button type="button">Back to beginning</button></a></li>
+    <div class="container">
+        <form id="LeadUser">
+            <p><label>Enter your name: <input name="name" /></label></p>
+        </form>
+        <button onclick="myFunction(this)" class="codegen"><span>Generate group code</span></button>
+        <p id="demo" class="title"></p>
+        <script>
+            function myFunction(button) {
+                var x = document.getElementById("demo")
+            x.innerHTML = Math.floor((Math.random() * 8999) + 1000);
+                button.style.visibility = "hidden";
+            }
+        </script>
+        <a href="Swipe.html"><button class="movingon"><span>START</span></button></a>
+        <a href="index.html"><button class="movingon"><span>Back to beginning</span></button></a>
+    </div>  
+        
 </body>
 </head>
 </html>
