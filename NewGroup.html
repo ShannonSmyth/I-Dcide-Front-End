@@ -19,6 +19,24 @@
                 button.style.visibility = "hidden";
             }
         </script>
+        
+        <h1 class="title">Options</h1>
+        <p class="text">Restaurant proximity:</p>
+        
+        <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
+        <p class="text"><span id="distance"></span> km</p>
+       
+        <script>
+            var slider = document.getElementById("myRange");
+            var output = document.getElementById("distance");
+            output.innerHTML = slider.value;
+
+            slider.oninput = function() {
+            output.innerHTML = this.value;
+            }
+        </script>
+        
+        
         <a href="Swipe.html"><button class="movingon"><span>START</span></button></a>
         <a href="index.html"><button class="movingon"><span>Back to beginning</span></button></a>
     </div>  
