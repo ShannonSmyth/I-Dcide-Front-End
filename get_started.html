@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>You Dcide</title>
+	</head>
+	<body>
+		<h1>Let's go!</h1>
+    <p>Your group code is </p>
+    <div id="codeDisplay"></div>
+		<p>When you're ready click go</p>
+		<button><a href= "http://localhost:8080/restaurantDecide">Go!</a></button>
+	</body>
+	<script>
+		fetch("http://localhost:8080/getCode")
+	  .then(response => response.json()) //returns JSON of response
+	  .then(json => { //json is a string here, since there is only one value it's fine
+	    document.getElementById("codeDisplay").innerHTML = json;
+	  })
+	</script>
+</html>
