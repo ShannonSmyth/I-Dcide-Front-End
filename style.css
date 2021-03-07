@@ -23,7 +23,7 @@ html,
 .testertext {
     font-size: 2rem;
     color: red;
-    
+
 }
 
 .movingon {
@@ -92,10 +92,10 @@ html,
 }
 
 
-.container { 
+.container {
   height: 800px;
   position: relative;
-  border: 3px transparent black; 
+  border: 3px transparent black;
 }
 
 

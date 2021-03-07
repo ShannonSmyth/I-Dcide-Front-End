@@ -3,14 +3,22 @@
 <head>
     <meta charset="utf-8">
     <title> I-Dcide </title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="/style.css" type='text/css'>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <body class = "fullscreen">
     <h1 class = "title">I-Dcide</h1>
     <div class="container">
-            <a href="NewGroup.html"><button class="movingon"><span>Create a new group</span></button></a>
-            <a href="JoinGroup.html"><button class="movingon" onclick = "Code.Generate"><span>Join a group</span></button></a>
+            <button class="movingon" onclick= "create()"><span>Create a new group</span></button>
+            <button class="movingon" onclick= "join()"><span>Join a group</span></button>
     </div>
 </body>
+<script>
+  function create(){
+    window.location = "http://localhost:8080/createGroup";
+  }
+  function join(){
+    window.location = "http://localhost:8080/joinGroup";
+  }
+</script>
 </head>
 </html>
