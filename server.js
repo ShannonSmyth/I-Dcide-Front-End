@@ -6,6 +6,14 @@ var path = require('path');
 var redis = require('redis');
 var connectRedis = require('connect-redis');
 
+//variable to use API from export
+var placesAPI = require('./placesAPI.js');
+//Variables to get from maps API to send to API
+var longitude = -99.299118;
+var latitude = 19.560318; //coordinates = -26.228889,-52.670833
+var radius = 2000;
+var keyword = 'mexican'; //this is a parameter needed to specify a key word in the search of the API
+
 var connection = mysql.createConnection({
  host     : 'localhost',
  user     : 'root',
@@ -98,6 +106,9 @@ app.post('/createGroup', function(request, response) { // host puts info in, get
   sess.code = code;
 
   //get restaurant choices for the group
+  //Adding google API function here
+  console.log("we are here");
+  placesAPI.coordiantes(latitude, longitude, radius, keyword);
   //This is where the API will fill in globalRestaurants object
 
   connection.query('INSERT INTO `Prototype1`.`Codes` (`CodeVal`,`userName`,`distance`,`loginTime`,`finished`) VALUES (?,?,?,NOW(),0);', [code,sess.username,distance], function(error, results, fields) {
