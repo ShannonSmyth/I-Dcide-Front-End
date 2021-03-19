@@ -3,44 +3,43 @@
 <head>
     <meta charset="utf-8">
     <title> New Group </title>
-    <link rel="stylesheet" href="css/style.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">    
-<body class = "fullscreen">
-    <div class="container">
-        <form id="LeadUser">
-            <p><label>Enter your name: <input name="name" /></label></p>
-        </form>
-        <button onclick="myFunction(this)" class="codegen"><span>Generate group code</span></button>
-        <p id="demo" class="title"></p>
-        <script>
-            function myFunction(button) {
-                var x = document.getElementById("demo")
-            x.innerHTML = Math.floor((Math.random() * 8999) + 1000);
-                button.style.visibility = "hidden";
-            }
-        </script>
-        
-        <h1 class="title">Options</h1>
-        <p class="text">Restaurant proximity:</p>
-        
-        <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
-        <p class="text"><span id="distance"></span> km</p>
-       
-        <script>
-            var slider = document.getElementById("myRange");
-            var output = document.getElementById("distance");
-            output.innerHTML = slider.value;
+    <link rel="stylesheet" href="/style.css" type='text/css'>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <body class = "fullscreen">
+      <div class="container">
 
-            slider.oninput = function() {
-            output.innerHTML = this.value;
-            }
-        </script>
-        
-        
-        <a href="Swipe.html"><button class="movingon"><span>START</span></button></a>
-        <a href="index.html"><button class="movingon"><span>Back to beginning</span></button></a>
-    </div>  
-        
-</body>
+          <form id="LeadUser" action="createGroup" method="POST">
+              <p><label>Enter your name: <input name="username" required></label></p>
+              <h1 class="title">Options</h1>
+              <p class="text">Restaurant proximity:</p>
+              <input type="range" min="1" max="100" value="50" class="slider" id="myRange" name="distance">
+              <p class="text"> <span id="distance"></span> km</p>
+          </form>
+
+          <button class="movingon" onclick= "submitting()"><span>START</span></button>
+          <button class="movingon" onclick= "back()"><span>Back to beginning</span></button>
+      </div>
+
+    </body>
+    <script>
+        var slider = document.getElementById("myRange");
+        var output = document.getElementById("distance");
+        output.innerHTML = slider.value;
+
+        slider.oninput = function() {
+          output.innerHTML = this.value;
+        }
+
+        function back(){
+          window.location = "http://localhost:8080/";
+        }
+
+        function submitting(){ //submit the form and location
+          var myForm = document.getElementById("LeadUser");
+          myForm.submit(); //submit the form contents
+
+        }
+
+    </script>
 </head>
 </html>
