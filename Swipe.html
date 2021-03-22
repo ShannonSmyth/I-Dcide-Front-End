@@ -177,9 +177,10 @@ function myFunction() {
 
   <!-- Include plugin after Swiper -->
   <script>
-    /* ========
-    Debugger plugin, simple demo plugin to console.log some of callbacks
-    ======== */
+          var menu = [];
+          var restaurant = [];
+          var restaurantResponses = [];
+          var numChoicesDone = 0;
     var myPlugin = {
       name: 'debugger',
       params: {
@@ -197,24 +198,32 @@ function myFunction() {
             current_Index = swiper.activeIndex;
             last_Index = swiper.previousIndex;
             if(direction < 0){
-            console.log('Left');
+            //console.log('Left');
             Right = false;
             };
             if(direction > 0){
-            console.log('Right');
+            //console.log('Right');
             Right = true;
             };
         },
         touchEnd: function(swiper, touchEnd){
           console.log(Right);
           if(Right === true){
+            restaurantResponses[numChoicesDone] = 2;
+            numChoicesDone = numChoicesDone + 1;
+            console.log(restaurantResponses);
             swiper.slideNext(100,true);
+            }
+            else if(Right === false){
+              restaurantResponses[numChoicesDone] = 1;
+              numChoicesDone = numChoicesDone + 1;
+              console.log(restaurantResponses);
             }
             Right = false;
       },
         slideChange: function (swiper) {
           if (!swiper.params.debugger) return;
-          console.log('slideChange', this.previousIndex, '->', this.activeIndex);
+          //console.log('slideChange', this.previousIndex, '->', this.activeIndex);
         },  
         realIndexChange: function (swiper) {
             if (!swiper.params.debugger) return;
