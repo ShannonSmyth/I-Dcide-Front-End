@@ -6,6 +6,7 @@ var path = require('path');
 var redis = require('redis');
 var connectRedis = require('connect-redis');
 var fetch = require('node-fetch');
+var request = require('request');
 
 //variable to use API from export
 var placesAPI = require('./placesAPI.js');
@@ -13,6 +14,7 @@ var placesAPI = require('./placesAPI.js');
 var longitude = -123.247665; 
 var latitude = 49.270044; //coordinates = -26.228889,-52.670833
 var keyword = 'mexican'; //this is a parameter needed to specify a key word in the search of the API
+var placeID = 'ChIJ_4mfbbhzhlQRMEEC_lcgKOE'; //testing id for Suika Japanese Restaurant
 
 var connection = mysql.createConnection({
  host     : 'localhost',
@@ -115,6 +117,9 @@ app.post('/createGroup', function(request, response) { // host puts info in, get
   //get restaurant choices for the group
   //Adding google API function here
   //var placeName = placesAPI.coordinates(latitude, longitude, radius, keyword);
+
+  //calling fucntion to print details
+  gettingInfo(placeID);
 
   connection.query('INSERT INTO `Prototype1`.`Codes` (`CodeVal`,`leader`,`userName`,`distance`,`loginTime`,`finished`) VALUES (?,1,?,?,NOW(),0);', [code,sess.username,distance], function(error, results, fields) {
   restaurant(latitude, longitude, radius, keyword, code, distance, sess.username); //This is where the API will fill in globalRestaurants object
@@ -221,10 +226,40 @@ function restaurant(latitude, longitude, radius, keyword, code, distance, userna
   .then(results =>{
     //result = results[1].name;
     //console.log(results[1].name);
-    console.log(results)
+    //console.log(results)
     connection.query('UPDATE `Prototype1`.`Codes` SET rest1 = ?, rest2 = ?, rest3 = ?, rest4 = ?, rest5 = ? WHERE codeVal = ? AND userName = ?;', [results[1].name, results[2].name, results[3].name, results[4].name, results[5].name, code, username], function(error, results, fields) {
     });
   });
+}
+
+//function to get information about the place
+function gettingInfo(placeID){
+  var ID = placeID
+  var output = 'json';
+  var key = 'AIzaSyDpxoneR_heaf7yrAY5_NHf_jD3pyvW680';
+  var fields = 'name,rating,formatted_phone_number';
+  var parameters = 'place_id=' + ID + '&fields=' + fields + '&key=' + key;
+  var url = 'https://maps.googleapis.com/maps/api/place/details/' + output + '?' + parameters;
+  console.log(url);
+  
+  /*request(url, function (error, response, body) {
+    if (!error && response.statusCode == 200) {
+        var json = response.json();
+        var results = json.results;
+
+        console.log(results);
+    }
+    });*/
+
+  var results =  fetch(url)
+    .then(response => response.json())
+    .then(json => json.results)
+    .then(results =>{
+      //result = results[1].name;
+      //console.log(results[1].name);
+      console.log(results);
+  });
+
 }
 
 app.listen(8080);
