@@ -5,13 +5,13 @@ var bodyParser = require('body-parser');
 var path = require('path');
 var redis = require('redis');
 var connectRedis = require('connect-redis');
+var fetch = require('node-fetch');
 
 //variable to use API from export
 var placesAPI = require('./placesAPI.js');
 //Variables to get from maps API to send to API
 var longitude = -99.299118;
 var latitude = 19.560318; //coordinates = -26.228889,-52.670833
-var radius = 2000;
 var keyword = 'mexican'; //this is a parameter needed to specify a key word in the search of the API
 
 var connection = mysql.createConnection({
@@ -80,7 +80,6 @@ app.post('/joinGroup', function(request, response) { //join the group and get se
  sess.username = request.body.username;
  if (code) {
    connection.query('INSERT INTO `Prototype1`.`Codes` (`CodeVal`,`userName`,`loginTime`,`finished`) VALUES (?,?,NOW(),0);', [code,sess.username], function(error, results, fields) {
-   request.session.loggedin = true;
    response.redirect('/');
    response.end();
    });
@@ -96,6 +95,8 @@ app.post('/createGroup', function(request, response) { // host puts info in, get
   var sess = request.session;
   sess.username = request.body.username;
   var distance = request.body.distance;
+  radius = parseInt(distance);
+  radius = radius*1000; //km to meters
 
   //create group code
   var num1 = Math.floor(Math.random() * Math.floor(99));
@@ -107,12 +108,13 @@ app.post('/createGroup', function(request, response) { // host puts info in, get
 
   //get restaurant choices for the group
   //Adding google API function here
-  console.log("we are here");
-  placesAPI.coordiantes(latitude, longitude, radius, keyword);
-  //This is where the API will fill in globalRestaurants object
+  //var placeName = placesAPI.coordinates(latitude, longitude, radius, keyword);
+
+//////////////////////////////This is where the API will fill in globalRestaurants object
+  restaurant(latitude, longitude, radius, keyword, code, distance);
+//////////////////////////////
 
   connection.query('INSERT INTO `Prototype1`.`Codes` (`CodeVal`,`userName`,`distance`,`loginTime`,`finished`) VALUES (?,?,?,NOW(),0);', [code,sess.username,distance], function(error, results, fields) {
-  request.session.loggedin = true;
   response.redirect('/');
   response.end();
   });
@@ -200,5 +202,24 @@ app.post('/logout', function(request, response) {
   });
   response.redirect('/');
 });
+
+function restaurant(latitude, longitude, radius, keyword, code, distance){
+  var lat = latitude;
+  var lon = longitude;
+  var output = 'json';
+  var key = 'AIzaSyDpxoneR_heaf7yrAY5_NHf_jD3pyvW680';
+  var type = 'restaurant';
+  var parameters = '&radius=' + radius + '&location=' + lat + ',' + lon + '&key=' + key + '&type=' + type;
+  var url = 'https://maps.googleapis.com/maps/api/place/nearbysearch/' + output + '?' + parameters;
+
+  var results =  fetch(url)
+  .then(response => response.json())
+  .then(json => json.results)
+  .then(results =>{
+    result = results[1].name;
+    connection.query('INSERT INTO `Prototype1`.`Codes` (`CodeVal`,`userName`,`distance`,`loginTime`,`finished`) VALUES (?,?,?,NOW(),0);', [code,result,distance], function(error, results, fields) {
+    });
+  });
+}
 
 app.listen(8080);
