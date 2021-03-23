@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<DOCTYPE html>
 <html lang="en">
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.css" />
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
@@ -115,21 +115,6 @@ function myFunction() {
       text-align: center;
       font-size: 18px;
       background: #fff;
-
-      /* Center slide text vertically */
-     /* display: -webkit-box;
-      display: -ms-flexbox;
-      display: -webkit-flex;
-      display: flex;
-      -webkit-box-pack: top;
-      -ms-flex-pack: top;
-      -webkit-justify-content: top;
-      justify-content: top;
-      -webkit-box-align: top;
-      -ms-flex-align: top;
-      -webkit-align-items: top;
-      align-items: top;
-      */
     }
 
     .swiper-slide .title {
@@ -154,33 +139,33 @@ function myFunction() {
   <!-- Swiper -->
   <div class="swiper-container">
     <div class="swiper-wrapper">
-      <div class="swiper-slide"><img src ="https://www.usnews.com/dims4/USNEWS/b40dd8f/2147483647/thumbnail/640x420/quality/85/?url=http%3A%2F%2Fmedia.beam.usnews.com%2F04%2Fab%2Fc93b944545d889fb9605e9c33710%2Frestaurant.jpg" style ="width: 100%;">
+      <div class="swiper-slide"><img src ="https://www.usnews.com/dims4/USNEWS/b40dd8f/2147483647/thumbnail/640x420/quality/85/?url=http%3A%2F%2Fmedia.beam.usnews.com%2F04%2Fab%2Fc93b944545d889fb9605e9c33710%2Frestaurant.jpg" style ="width: 94%; left: 3%; right: 3%">
       <br>
     <div class="title">Option 1</div>
       <br>
     <div class = "text"> This is text all about this potential restaraunt option, maybe a discription or a phone number or something, who knows?</div>
   </div>
-      <div class="swiper-slide"><img src ="https://media.istockphoto.com/photos/waiter-serving-group-of-female-friends-meeting-for-drinks-and-food-in-picture-id1146671798?k=6&m=1146671798&s=612x612&w=0&h=p8M-TCjxBX9LD5pQfxGDOew0_P7hf8y5YvtWWfAcpjI=" style ="width: 100%;">
+      <div class="swiper-slide"><img src ="https://media.istockphoto.com/photos/waiter-serving-group-of-female-friends-meeting-for-drinks-and-food-in-picture-id1146671798?k=6&m=1146671798&s=612x612&w=0&h=p8M-TCjxBX9LD5pQfxGDOew0_P7hf8y5YvtWWfAcpjI=" style ="width: 94%; left: 3%; right: 3%">
         <br>
       <div class="title">Option 2</div>
         <br>
       <div class = "text"> This is text all about this potential restaraunt option, maybe a discription or a phone number or something, who knows?</div></div>
       <div class="swiper-slide">
-        <img src ="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTZ8fHJlc3RhdXJhbnR8ZW58MHx8MHw%3D&ixlib=rb-1.2.1&w=1000&q=80" style ="width: 100%;">
+        <img src ="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTZ8fHJlc3RhdXJhbnR8ZW58MHx8MHw%3D&ixlib=rb-1.2.1&w=1000&q=80" style ="width: 94%; left:3%; right: 3%">
         <br>
       <div class="title">Option 3</div>
         <br>
       <div class = "text"> This is text all about this potential restaraunt option, maybe a discription or a phone number or something, who knows?</div>
       </div>
       <div class="swiper-slide">
-        <img src ="https://media.gettyimages.com/photos/cozy-restaurant-for-gathering-with-friends-picture-id1159992039?s=612x612" style ="width: 100%;">
+        <img src ="https://media.gettyimages.com/photos/cozy-restaurant-for-gathering-with-friends-picture-id1159992039?s=612x612" style ="width: 94%; left: 3%; right: 3%">
         <br>
       <div class="title">Option 4</div>
         <br>
       <div class = "text"> This is text all about this potential restaraunt option, maybe a discription or a phone number or something, who knows?</div>
       </div>
       <div class="swiper-slide">
-        <img src ="https://media.istockphoto.com/photos/interior-of-cozy-restaurant-loft-style-picture-id843610508?k=6&m=843610508&s=612x612&w=0&h=41DLQdNj3YtjIbSUQtX2zEvdJHAdHAq5c1MVS37VNzo=" style ="width: 100%;">
+        <img src ="https://media.istockphoto.com/photos/interior-of-cozy-restaurant-loft-style-picture-id843610508?k=6&m=843610508&s=612x612&w=0&h=41DLQdNj3YtjIbSUQtX2zEvdJHAdHAq5c1MVS37VNzo=" style ="width: 94%; left: 3%; right: 3%">
         <br>
       <div class="title">Option 5</div>
         <br>
@@ -192,9 +177,10 @@ function myFunction() {
 
   <!-- Include plugin after Swiper -->
   <script>
-    /* ========
-    Debugger plugin, simple demo plugin to console.log some of callbacks
-    ======== */
+          var menu = [];
+          var restaurant = [];
+          var restaurantResponses = [];
+          var numChoicesDone = 0;
     var myPlugin = {
       name: 'debugger',
       params: {
@@ -212,24 +198,32 @@ function myFunction() {
             current_Index = swiper.activeIndex;
             last_Index = swiper.previousIndex;
             if(direction < 0){
-            console.log('Left');
+            //console.log('Left');
             Right = false;
             };
             if(direction > 0){
-            console.log('Right');
+            //console.log('Right');
             Right = true;
             };
         },
         touchEnd: function(swiper, touchEnd){
           console.log(Right);
           if(Right === true){
+            restaurantResponses[numChoicesDone] = 2;
+            numChoicesDone = numChoicesDone + 1;
+            console.log(restaurantResponses);
             swiper.slideNext(100,true);
+            }
+            else if(Right === false){
+              restaurantResponses[numChoicesDone] = 1;
+              numChoicesDone = numChoicesDone + 1;
+              console.log(restaurantResponses);
             }
             Right = false;
       },
         slideChange: function (swiper) {
           if (!swiper.params.debugger) return;
-          console.log('slideChange', this.previousIndex, '->', this.activeIndex);
+          //console.log('slideChange', this.previousIndex, '->', this.activeIndex);
         },  
         realIndexChange: function (swiper) {
             if (!swiper.params.debugger) return;
@@ -251,5 +245,3 @@ function myFunction() {
     });
   </script>
 </body>
-
-</html>
