@@ -110,11 +110,8 @@ app.post('/createGroup', function(request, response) { // host puts info in, get
   //Adding google API function here
   //var placeName = placesAPI.coordinates(latitude, longitude, radius, keyword);
 
-//////////////////////////////This is where the API will fill in globalRestaurants object
-  restaurant(latitude, longitude, radius, keyword, code, distance);
-//////////////////////////////
-
   connection.query('INSERT INTO `Prototype1`.`Codes` (`CodeVal`,`userName`,`distance`,`loginTime`,`finished`) VALUES (?,?,?,NOW(),0);', [code,sess.username,distance], function(error, results, fields) {
+  restaurant(latitude, longitude, radius, keyword, code, distance, sess.username); //This is where the API will fill in globalRestaurants object
   response.redirect('/');
   response.end();
   });
@@ -203,7 +200,7 @@ app.post('/logout', function(request, response) {
   response.redirect('/');
 });
 
-function restaurant(latitude, longitude, radius, keyword, code, distance){
+function restaurant(latitude, longitude, radius, keyword, code, distance, username){
   var lat = latitude;
   var lon = longitude;
   var output = 'json';
@@ -217,7 +214,7 @@ function restaurant(latitude, longitude, radius, keyword, code, distance){
   .then(json => json.results)
   .then(results =>{
     result = results[1].name;
-    connection.query('INSERT INTO `Prototype1`.`Codes` (`CodeVal`,`userName`,`distance`,`loginTime`,`finished`) VALUES (?,?,?,NOW(),0);', [code,result,distance], function(error, results, fields) {
+    connection.query('UPDATE `Prototype1`.`Codes` SET rest1 = ? WHERE codeVal = ? AND userName = ?;', [result, code, username], function(error, results, fields) {
     });
   });
 }

@@ -13,17 +13,19 @@ CREATE TABLE Codes (
     choice2 int,
     choice3 int,
     choice4 int,
-    choice5 int
+    choice5 int,
+    rest1 VARCHAR(50),
+    rest2 VARCHAR(50),
+    rest3 VARCHAR(50),
+    rest4 VARCHAR(50),
+    rest5 VARCHAR(50)
 );
 
-ALTER TABLE Codes ADD COLUMN finished VARCHAR(50) AFTER userName;
-ALTER TABLE Codes DROP COLUMN username;
 
 CREATE EVENT check_db ON SCHEDULE EVERY 10 MINUTE ENABLE 
   DO 
   DELETE FROM Codes WHERE `loginTime` < CURRENT_TIMESTAMP - INTERVAL 30 MINUTE;
 
-DROP EVENT check_db;
 
 2.
 
