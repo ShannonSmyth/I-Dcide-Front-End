@@ -10,8 +10,8 @@ var fetch = require('node-fetch');
 //variable to use API from export
 var placesAPI = require('./placesAPI.js');
 //Variables to get from maps API to send to API
-var longitude = -99.299118;
-var latitude = 19.560318; //coordinates = -26.228889,-52.670833
+var longitude = -123.247665; 
+var latitude = 49.270044; //coordinates = -26.228889,-52.670833
 var keyword = 'mexican'; //this is a parameter needed to specify a key word in the search of the API
 
 var connection = mysql.createConnection({
@@ -213,8 +213,10 @@ function restaurant(latitude, longitude, radius, keyword, code, distance, userna
   .then(response => response.json())
   .then(json => json.results)
   .then(results =>{
-    result = results[1].name;
-    connection.query('UPDATE `Prototype1`.`Codes` SET rest1 = ? WHERE codeVal = ? AND userName = ?;', [result, code, username], function(error, results, fields) {
+    //result = results[1].name;
+    //console.log(results[1].name);
+    console.log(results)
+    connection.query('UPDATE `Prototype1`.`Codes` SET rest1 = ?, rest2 = ?, rest3 = ?, rest4 = ?, rest5 = ? WHERE codeVal = ? AND userName = ?;', [results[1].name, results[2].name, results[3].name, results[4].name, results[5].name, code, username], function(error, results, fields) {
     });
   });
 }
