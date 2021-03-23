@@ -5,6 +5,7 @@ Setup for Prototype 2:
 CREATE TABLE Codes (
     CodeVal int,
     userName VARCHAR(50),
+    leader int,
     finished int,
     loginTime DATETIME,
     category VARCHAR(50),

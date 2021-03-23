@@ -110,7 +110,7 @@ app.post('/createGroup', function(request, response) { // host puts info in, get
   //Adding google API function here
   //var placeName = placesAPI.coordinates(latitude, longitude, radius, keyword);
 
-  connection.query('INSERT INTO `Prototype1`.`Codes` (`CodeVal`,`userName`,`distance`,`loginTime`,`finished`) VALUES (?,?,?,NOW(),0);', [code,sess.username,distance], function(error, results, fields) {
+  connection.query('INSERT INTO `Prototype1`.`Codes` (`CodeVal`,`leader`,`userName`,`distance`,`loginTime`,`finished`) VALUES (?,1,?,?,NOW(),0);', [code,sess.username,distance], function(error, results, fields) {
   restaurant(latitude, longitude, radius, keyword, code, distance, sess.username); //This is where the API will fill in globalRestaurants object
   response.redirect('/');
   response.end();
