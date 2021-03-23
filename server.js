@@ -21,6 +21,12 @@ var connection = mysql.createConnection({
  database : 'Prototype1' //name of my database in MySQl
 });
 
+//Checking connection
+connection.connect(function(err) {
+  if (err) throw err;
+  console.log("Connected!");
+});
+
 var app = express();
 app.use(session({
  secret: 'secret',
