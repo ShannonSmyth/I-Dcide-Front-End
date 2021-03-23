@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang = "en" >
+<head>
+    <meta charset="utf-8">
+    <title> New Group </title>
+    <link rel="stylesheet" href="/style.css" type='text/css'>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<body class = "fullscreen">
+    <div class="container">
+        <form id="NewUser" action="joinGroup" method="POST">
+            <p><label>Enter Group Code: <input name="code"/></label></p>
+            <p><label>Enter your name: <input name="username" /></label></p>
+        </form>
+        <button class="movingon" onclick= "start()"><span>START</span></button>
+        <button class="movingon" onclick= "back()"><span>Back to beginning</span></button>
+    </div>
+</body>
+<script>
+  function back() {
+    window.location = "http://localhost:8080/";
+  }
+  function start() {
+    var myForm = document.getElementById("NewUser");
+    myForm.submit(); //submit the form contents
+  }
+</script>
+</head>
+</html>
