@@ -225,9 +225,9 @@ function restaurant(latitude, longitude, radius, keyword, code, distance, userna
   .then(json => json.results)
   .then(results =>{
     //result = results[1].name;
-    //console.log(results[1].name);
+    console.log(results[1].place_id);
     //console.log(results)
-    connection.query('UPDATE `Prototype1`.`Codes` SET rest1 = ?, rest2 = ?, rest3 = ?, rest4 = ?, rest5 = ? WHERE codeVal = ? AND userName = ?;', [results[1].name, results[2].name, results[3].name, results[4].name, results[5].name, code, username], function(error, results, fields) {
+    connection.query('UPDATE `Prototype1`.`Codes` SET rest1 = ?, rest2 = ?, rest3 = ?, rest4 = ?, rest5 = ? WHERE codeVal = ? AND userName = ?;', [results[1].place_id, results[2].place_id, results[3].place_id, results[4].place_id, results[5].place_id, code, username], function(error, results, fields) {
     });
   });
 }
@@ -250,14 +250,16 @@ function gettingInfo(placeID){
         console.log(results);
     }
     });*/
-
+ 
   var results =  fetch(url)
     .then(response => response.json())
-    .then(json => json.results)
-    .then(results =>{
+    .then(json => json.result)
+    .then(result =>{
       //result = results[1].name;
       //console.log(results[1].name);
-      console.log(results);
+      console.log(result.name);
+      console.log(result.rating);
+      console.log(result.formatted_phone_number);
   });
 
 }
