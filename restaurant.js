@@ -63,21 +63,22 @@ var swiper = new Swiper('.swiper-container', {
   debugger: true,
 });
 
-var menu = [];
-var restaurant = [];
 var restaurantResponses = [];
 var numChoicesDone = 0;
 
 fetch("http://localhost:8080/restaurantChoices") //NOTE: PROMISES ARE Asyncronous!!
 .then(response => response.json()) //returns JSON of response
 .then(json => {
-  json = JSON.parse(json);
-  console.log(json);
-  console.log(json[1]);
-  // for(var i = 0;i<5;i++){ //put the eventual API suggestions into the client side variables
-  //   menu[i] = json.menu[i];
-  //   restaurant[i] = json.restaurant[i];
-  // }
+  var phone = [];
+  var name = [];
+  var rating = [];
+  restaurant = JSON.parse(json);
+  for(var i = 0;i<5;i++){ //put the API suggestions into the client side variables
+    var temp = restaurant[i]; //get the restaurant array which contains the other info
+    name[i] = temp[0];
+    rating[i] = temp[1];
+    phone[i] = temp[2];
+  }
 })
 
 function postRestaurants(){

@@ -161,7 +161,7 @@ app.get('/restaurantChoices', function(request, response){ //send restaurant cho
       names[2] = await gettingInfo(results[0].rest3)
       names[3] = await gettingInfo(results[0].rest4)
       names[4] = await gettingInfo(results[0].rest5)
-      //console.log(typeof names)
+      //console.log(names)
       response.json(JSON.stringify(names));
     }
     names()
@@ -268,7 +268,11 @@ function gettingInfo(placeID){
     .then(response => response.json())
     .then(json => json.result)
     .then(result =>{
-      return result.name
+      var info = []
+      info[0] = result.name;
+      info[1] = result.rating;
+      info[2] = result.formatted_phone_number;
+      return info
   });
 
 }
