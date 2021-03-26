@@ -11,7 +11,7 @@ var request = require('request');
 //variable to use API from export
 var placesAPI = require('./placesAPI.js');
 //Variables to get from maps API to send to API
-var longitude = -123.247665; 
+var longitude = -123.247665;
 var latitude = 49.270044; //coordinates = -26.228889,-52.670833
 var keyword = 'mexican'; //this is a parameter needed to specify a key word in the search of the API
 var placeID = 'ChIJ_4mfbbhzhlQRMEEC_lcgKOE'; //testing id for Suika Japanese Restaurant
@@ -24,10 +24,10 @@ var connection = mysql.createConnection({
 });
 
 //Checking connection
-connection.connect(function(err) {
-  if (err) throw err;
-  console.log("Connected!");
-});
+// connection.connect(function(err) {
+//   if (err) throw err;
+//   console.log("Connected!");
+// });
 
 var app = express();
 app.use(session({
@@ -123,7 +123,7 @@ app.post('/createGroup', function(request, response) { // host puts info in, get
 
   connection.query('INSERT INTO `Prototype1`.`Codes` (`CodeVal`,`leader`,`userName`,`distance`,`loginTime`,`finished`) VALUES (?,1,?,?,NOW(),0);', [code,sess.username,distance], function(error, results, fields) {
   restaurant(latitude, longitude, radius, keyword, code, distance, sess.username); //This is where the API will fill in globalRestaurants object
-  response.redirect('/');
+  response.redirect('/restaurantDecide');
   response.end();
   });
 
@@ -147,12 +147,26 @@ app.get('/getCode', function(request, response) { //get group code for getStarte
 });
 
 app.get('/restaurantDecide', function(request, response){ //restaurant decision page
-  response.sendFile(path.join(__dirname + '/restaurantDecide.html'));
+  response.sendFile(path.join(__dirname + '/Swipe.html'));
   app.use(express.static('Restaurant Choice Files'));
 })
 
 app.get('/restaurantChoices', function(request, response){ //send restaurant choices to client
-  response.json(JSON.stringify(globalRestaurants));
+  var sess = request.session;
+  connection.query('SELECT rest1,rest2,rest3,rest4,rest5 FROM `Prototype1`.`Codes` WHERE codeVal = ? AND leader = 1;', [sess.code], function(error, results, fields) {
+    async function names(){
+      var names = [];
+      names[0] = await gettingInfo(results[0].rest1)
+      names[1] = await gettingInfo(results[0].rest2)
+      names[2] = await gettingInfo(results[0].rest3)
+      names[3] = await gettingInfo(results[0].rest4)
+      names[4] = await gettingInfo(results[0].rest5)
+      //console.log(typeof names)
+      response.json(JSON.stringify(names));
+    }
+    names()
+  });
+
 })
 
 app.post('/responseToDB', function(request, response) { //post all the results to the server and database then redirect to waiting page
@@ -225,7 +239,7 @@ function restaurant(latitude, longitude, radius, keyword, code, distance, userna
   .then(json => json.results)
   .then(results =>{
     //result = results[1].name;
-    console.log(results[1].place_id);
+    //console.log(results[1].place_id);
     //console.log(results)
     connection.query('UPDATE `Prototype1`.`Codes` SET rest1 = ?, rest2 = ?, rest3 = ?, rest4 = ?, rest5 = ? WHERE codeVal = ? AND userName = ?;', [results[1].place_id, results[2].place_id, results[3].place_id, results[4].place_id, results[5].place_id, code, username], function(error, results, fields) {
     });
@@ -240,26 +254,21 @@ function gettingInfo(placeID){
   var fields = 'name,rating,formatted_phone_number';
   var parameters = 'place_id=' + ID + '&fields=' + fields + '&key=' + key;
   var url = 'https://maps.googleapis.com/maps/api/place/details/' + output + '?' + parameters;
-  console.log(url);
-  
+  //console.log(url);
+
   /*request(url, function (error, response, body) {
     if (!error && response.statusCode == 200) {
         var json = response.json();
         var results = json.results;
-
         console.log(results);
     }
     });*/
- 
-  var results =  fetch(url)
+
+  return fetch(url)
     .then(response => response.json())
     .then(json => json.result)
     .then(result =>{
-      //result = results[1].name;
-      //console.log(results[1].name);
-      console.log(result.name);
-      console.log(result.rating);
-      console.log(result.formatted_phone_number);
+      return result.name
   });
 
 }
