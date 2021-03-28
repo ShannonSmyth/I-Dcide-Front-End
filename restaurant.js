@@ -69,21 +69,22 @@ var numChoicesDone = 0;
 fetch("http://localhost:8080/restaurantChoices") //NOTE: PROMISES ARE Asyncronous!!
 .then(response => response.json()) //returns JSON of response
 .then(json => {
-  var phone = [];
+  var address = [];
   var name = [];
   var rating = [];
   var image = [];
+  var priceLevel = [];
   restaurant = JSON.parse(json);
   for(var i = 0;i<5;i++){ //put the API suggestions into the client side variables
     var temp = restaurant[i]; //get the restaurant array which contains the other info
     name[i] = temp[0];
     rating[i] = temp[1];
-    phone[i] = temp[2];
-    //valIMG = temp[3];
-    //image[i] = valIMG[1].photo_reference;
+    address[i] = temp[2];
     image[i] = temp[3];
+    priceLevel[i] = temp[4];
+
   }
-  // console.log(name);
+  //console.log(address);
   // console.log(image);
   document.getElementById("image1").src=image[0];
   document.getElementById("image2").src=image[1];

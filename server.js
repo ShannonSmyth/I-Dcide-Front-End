@@ -251,7 +251,7 @@ function gettingInfo(placeID){
   var ID = placeID
   var output = 'json';
   var key = 'AIzaSyDpxoneR_heaf7yrAY5_NHf_jD3pyvW680';
-  var fields = 'name,rating,formatted_phone_number,photos';
+  var fields = 'name,rating,vicinity,photos,price_level';
   var parameters = 'place_id=' + ID + '&fields=' + fields + '&key=' + key;
   var url = 'https://maps.googleapis.com/maps/api/place/details/' + output + '?' + parameters;
   //console.log(url);
@@ -268,15 +268,17 @@ function gettingInfo(placeID){
     .then(response => response.json())
     .then(json => json.result)
     .then(result =>{
+      //console.log(result.price);
       var info = []
       info[0] = result.name;
       info[1] = result.rating;
-      info[2] = result.formatted_phone_number;
+      info[2] = result.vicinity;
       //info[3] = result.photos;
       var valIMG = result.photos;
       var parameter = valIMG[1].photo_reference; //getting the photo reference values
       var width = 2000;
       info[3] = 'https://maps.googleapis.com/maps/api/place/photo?maxwidth='+width+'&photoreference='+parameter+'&key='+key
+      info[4] = result.price_level;
       return info
   });
 
