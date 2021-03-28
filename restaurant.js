@@ -91,6 +91,10 @@ fetch("http://localhost:8080/restaurantChoices") //NOTE: PROMISES ARE Asyncronou
   document.getElementById("image4").src=image[3];
   document.getElementById("image5").src=image[4];
   document.getElementById("option1").innerHTML=name[0];
+  document.getElementById("option2").innerHTML=name[1];
+  document.getElementById("option3").innerHTML=name[2];
+  document.getElementById("option4").innerHTML=name[3];
+  document.getElementById("option5").innerHTML=name[4];
 })
 
 function postRestaurants(){
