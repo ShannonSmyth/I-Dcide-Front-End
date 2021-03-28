@@ -83,8 +83,14 @@ fetch("http://localhost:8080/restaurantChoices") //NOTE: PROMISES ARE Asyncronou
     //image[i] = valIMG[1].photo_reference;
     image[i] = temp[3];
   }
-  console.log(name);
-  console.log(image);
+  // console.log(name);
+  // console.log(image);
+  document.getElementById("image1").src=image[0];
+  document.getElementById("image2").src=image[1];
+  document.getElementById("image3").src=image[2];
+  document.getElementById("image4").src=image[3];
+  document.getElementById("image5").src=image[4];
+  document.getElementById("option1").innerHTML=name[0];
 })
 
 function postRestaurants(){
