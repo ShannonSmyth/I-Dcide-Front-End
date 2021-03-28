@@ -14,7 +14,7 @@ var placesAPI = require('./placesAPI.js');
 var longitude = -123.247665;
 var latitude = 49.270044; //coordinates = -26.228889,-52.670833
 var keyword = 'mexican'; //this is a parameter needed to specify a key word in the search of the API
-var placeID = 'ChIJ_4mfbbhzhlQRMEEC_lcgKOE'; //testing id for Suika Japanese Restaurant
+//var placeID = 'ChIJ_4mfbbhzhlQRMEEC_lcgKOE'; //testing id for Suika Japanese Restaurant
 
 var connection = mysql.createConnection({
  host     : 'localhost',
@@ -119,7 +119,7 @@ app.post('/createGroup', function(request, response) { // host puts info in, get
   //var placeName = placesAPI.coordinates(latitude, longitude, radius, keyword);
 
   //calling fucntion to print details
-  gettingInfo(placeID);
+  //gettingInfo(placeID);
 
   connection.query('INSERT INTO `Prototype1`.`Codes` (`CodeVal`,`leader`,`userName`,`distance`,`loginTime`,`finished`) VALUES (?,1,?,?,NOW(),0);', [code,sess.username,distance], function(error, results, fields) {
   restaurant(latitude, longitude, radius, keyword, code, distance, sess.username); //This is where the API will fill in globalRestaurants object
@@ -251,7 +251,7 @@ function gettingInfo(placeID){
   var ID = placeID
   var output = 'json';
   var key = 'AIzaSyDpxoneR_heaf7yrAY5_NHf_jD3pyvW680';
-  var fields = 'name,rating,formatted_phone_number';
+  var fields = 'name,rating,formatted_phone_number,photos';
   var parameters = 'place_id=' + ID + '&fields=' + fields + '&key=' + key;
   var url = 'https://maps.googleapis.com/maps/api/place/details/' + output + '?' + parameters;
   //console.log(url);
@@ -272,6 +272,11 @@ function gettingInfo(placeID){
       info[0] = result.name;
       info[1] = result.rating;
       info[2] = result.formatted_phone_number;
+      //info[3] = result.photos;
+      var valIMG = result.photos;
+      var parameter = valIMG[1].photo_reference; //getting the photo reference values
+      var width = 2000;
+      info[3] = 'https://maps.googleapis.com/maps/api/place/photo?maxwidth='+width+'&photoreference='+parameter+'&key='+key
       return info
   });
 
