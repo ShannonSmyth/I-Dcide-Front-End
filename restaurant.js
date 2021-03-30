@@ -54,11 +54,27 @@ var myPlugin = {
   },
 };
 
+function DollarSigns(number){
+  switch(number) {
+  case 1:
+    return "$";
+   case 2:
+    return "$$";
+   case 3:
+   return "$$$";
+   case 4:
+   return "$$$$";
+   case 5:
+  return "$$$$$";
+  }
+  }
+  
 // Install Plugin To Swiper
 Swiper.use(myPlugin);
 
 // Init Swiper
 var swiper = new Swiper('.swiper-container', {
+  spaceBetween: 30,
   // Enable debugger
   debugger: true,
 });
@@ -96,7 +112,23 @@ fetch("http://localhost:8080/restaurantChoices") //NOTE: PROMISES ARE Asyncronou
   document.getElementById("option3").innerHTML=name[2];
   document.getElementById("option4").innerHTML=name[3];
   document.getElementById("option5").innerHTML=name[4];
+  document.getElementById("address1").innerHTML=address[0];
+  document.getElementById("address2").innerHTML=address[1];
+  document.getElementById("address3").innerHTML=address[2];
+  document.getElementById("address4").innerHTML=address[3];
+  document.getElementById("address5").innerHTML=address[4];
+  document.getElementById("rating1").innerHTML=rating[0];
+  document.getElementById("rating2").innerHTML=rating[1];
+  document.getElementById("rating3").innerHTML=rating[2];
+  document.getElementById("rating4").innerHTML=rating[3];
+  document.getElementById("rating5").innerHTML=rating[4];
+  document.getElementById("priceLevel1").innerHTML=Dollarsigns(priceLevel[0]);
+  document.getElementById("priceLevel2").innerHTML=Dollarsigns(priceLevel[1]);
+  document.getElementById("priceLevel3").innerHTML=Dollarsigns(priceLevel[2]);
+  document.getElementById("priceLevel").innerHTML=Dollarsigns(priceLevel[3]);
+  document.getElementById("priceLevel").innerHTML=Dollarsigns(priceLevel[4]);
 })
+
 
 function postRestaurants(){
   fetch('http://localhost:8080/responseToDB', {
