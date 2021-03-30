@@ -11,8 +11,8 @@ var request = require('request');
 //variable to use API from export
 var placesAPI = require('./placesAPI.js');
 //Variables to get from maps API to send to API
-var longitude = -123.247665;
-var latitude = 49.270044; //coordinates = -26.228889,-52.670833
+// var longitude = -123.247665;
+// var latitude = 49.270044; //coordinates = -26.228889,-52.670833
 var keyword = 'mexican'; //this is a parameter needed to specify a key word in the search of the API
 //var placeID = 'ChIJ_4mfbbhzhlQRMEEC_lcgKOE'; //testing id for Suika Japanese Restaurant
 
@@ -279,9 +279,64 @@ function gettingInfo(placeID){
       var width = 2000;
       info[3] = 'https://maps.googleapis.com/maps/api/place/photo?maxwidth='+width+'&photoreference='+parameter+'&key='+key
       info[4] = result.price_level;
+
       return info
   });
 
 }
+
+var address = "UBC";
+function getCoordinates(address) {
+  var key = 'AIzaSyDpxoneR_heaf7yrAY5_NHf_jD3pyvW680';
+  var url = 'https://maps.googleapis.com/maps/api/geocode/json?address='+address+'&key='+key
+  //console.log(url);
+  return fetch(url)
+    .then(response => response.json())
+    .then(json => json.results)
+    .then(result =>{
+      console.log(result[0].geometry.location.lat)
+      console.log(result[0].geometry.location.lng)
+      var coordinates = []
+      coordinates[0] = result[0].geometry.location.lat
+      coordinates[1] = result[0].geometry.location.lng
+      return coordinates
+  });
+
+}
+
+app.post('/address', function(request, response) { //display group code
+  var address = request.body;
+  var sess = request.session;
+  //response.json(JSON.stringify(address));
+  async function coordinates(address){
+    var addy = await getCoordinates(address);
+    console.log(addy[0]+" "+addy[1])
+    sess.lat = addy[0];
+    sess.lng = addy[1];
+    response.json(JSON.stringify(addy));
+  }
+  coordinates(address)
+});
+
+// app.get('/address', function(request, response) { //display group code
+//   var sess = request.session;
+//   async function coordinates(address){
+//     var addy = await getCoordinates(address);
+//     //console.log(addy[0]+" "+addy[1])
+//     sess.lat = addy[0];
+//     sess.lng = addy[1];
+//     response.json(JSON.stringify(addy));
+//   }
+//   coordinates(address)
+// });
+
+app.get('/a', function(request, response) { //display group code
+  response.sendFile(path.join(__dirname + '/enter_address.html'));
+});
+
+// app.get('/a', function(request, response) { //display group code
+//   getCoordinates(address);
+//   response.sendFile(path.join(__dirname + '/index.html'));
+// });
 
 app.listen(8080);
