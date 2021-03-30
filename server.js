@@ -195,7 +195,7 @@ app.get('/username', function(request, response) { //get username of clients, an
 });
 
 app.get('/Results', function(request, response) { //display group code
-  response.sendFile(path.join(__dirname + '/Results.html'));
+  response.sendFile(path.join(__dirname + '/results.html'));
   app.use(express.static('Results Page Files'));
 });
 
