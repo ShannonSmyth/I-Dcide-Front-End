@@ -11,8 +11,11 @@
   <title>Swiper demo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
 
+  <script src="https://kit.fontawesome.com/9f6f62503b.js" crossorigin="anonymous"></script>
+
   <!-- Link Swiper's CSS -->
   <link rel="stylesheet" href="../package/swiper-bundle.min.css">
+  
 
   <!-- Demo styles -->
   <style>
@@ -137,6 +140,13 @@
       line-height: 1.3;
       position: center;
     }
+    p.DollarSign{
+      font-size: 25px;
+      color: slategrey;
+      font-style: italic;
+      position: relative;
+      right: 200px;
+    }
   </style>
 </head>
 
@@ -144,38 +154,63 @@
   <!-- Swiper -->
   <div class="swiper-container">
     <div class="swiper-wrapper">
-      <div class="swiper-slide"><img id="image1" style ="height: 40vh;">
+      <div class="swiper-slide">
+        <img id="image1" style ="height: 50vh;">
       <br>
     <div id="option1" class="title"></div>
       <br>
-    <div class = "text"> This is text all about this potential restaraunt option, maybe a discription or a phone number or something, who knows?</div>
+      <p class ="DollarSign" id="priceLevel1"></p>
+      <br>
+      <i class="fa fa-star"></i> <p class = "text" id = "rating1">/5</p>
+      <br>
+    <div id = "address1" class = "text"></div>
+    
   </div>
-      <div class="swiper-slide"><img id="image2" style ="height: 40vh;">
-        <br>
-      <div id ="option2" class="title"></div>
-        <br>
-      <div class = "text"> This is text all about this potential restaraunt option, maybe a discription or a phone number or something, who knows?</div></div>
-      <div class="swiper-slide">
-        <img id="image3" style ="height: 40vh;">
+    <div class="swiper-slide">
+        <img id="image2" style ="height: 50vh;">
+          <br>
+        <div id ="option2" class="title"></div>
+         <br>
+        <p class ="DollarSign" id="priceLevel2"></p>
+          <br>
+        <i class="fa fa-star"></i> <p class = "text" id = "rating2">/5</p>
+         <br>
+        <div id = "address2" class = "text"></div>
+        
+      </div>
+    <div class="swiper-slide">
+        <img id="image3" style ="height: 50vh;">
         <br>
       <div id = "option3" class="title"></div>
         <br>
-      <div class = "text"> This is text all about this potential restaraunt option, maybe a discription or a phone number or something, who knows?</div>
-      </div>
-      <div class="swiper-slide">
-        <img id="image4" style ="height: 40vh;">
+        <p class ="DollarSign" id="priceLevel3"></p>
         <br>
-      <div id="option4" class="title"></div>
+        <i class="fa fa-star"></i> <p class = "text" id = "rating3">/5</p>
         <br>
-      <div class = "text"> This is text all about this potential restaraunt option, maybe a discription or a phone number or something, who knows?</div>
+      <div id = "address3" class = "text"></div>
+    </div>
+    <div class="swiper-slide">
+        <img id="image4" style ="height: 50vh;">
+        <br>
+        <div id="option4" class="title"></div>
+         <br>
+        <p class ="DollarSign" id="priceLevel4"></p>
+          <br>
+        <i class="fa fa-star"></i> <p class = "text" id = "rating3">/5</p>
+          <br>
+        <div id = "address4" class = "text"></div>
       </div>
-      <div class="swiper-slide">
+    <div class="swiper-slide">
         <img id="image5" style ="height: 40vh;">
-        <br>
-      <div id = "option5" class="title"></div>
-        <br>
-      <div class = "text"> This is text all about this potential restaraunt option, maybe a discription or a phone number or something, who knows?</div>
-      </div>
+         <br>
+        <div id = "option5" class="title"></div>
+         <br>
+        <p class ="DollarSign" id="priceLevel5"></p>
+         <br>
+        <i class="fa fa-star"></i> <p class = "text" id = "rating5">/5</p>
+         <br>
+        <div id = "address5" class = "text"></div>
+      </div> 
 
   <!-- Swiper JS -->
   <script src="../package/swiper-bundle.min.js"></script>

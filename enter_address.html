@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>You Dcide</title>
+	</head>
+	<body>
+		<div>
+			<h1>Enter address</h1>
+			<input type="text" id="address" value="UBC">
+			<button onclick="latLong()">Try it</button>
+		</div>
+		<p id="coordinates"></p>
+	</body>
+	<script>
+		function latLong(){
+			var address = [];
+		 	address[0] = document.getElementById("address").value;
+			fetch('http://localhost:8080/address', {
+		      method: 'POST',
+		      body: JSON.stringify(address),
+					headers: {
+		          'Content-type': 'application/json; charset=UTF-8'
+		      }
+		  })
+			.then(response => response.json())
+			.then(json =>{
+				console.log(json);
+			})
+		}
+	</script>
+</html>
