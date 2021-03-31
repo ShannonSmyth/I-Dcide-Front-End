@@ -28,15 +28,16 @@
         <p class = "text">Enter address 
         <input type="text" id="address" value="UBC">
         </p>
-        <button class="address" onclick="onMapClick()">Go to address</button>
     </div>
+    </form>
+    <p id="codeDisplay"></p>
+    <button class="address" onclick="onMapClick()">Go to address</button>
     <p id="lat"></p>
     <p id="long"></p>
               
     <p class="text">Restaurant proximity:</p>
         <input type="range" min="1" max="5000" value="500" class="slider" id="myRange" name="distance">
     <p class="text"> <span id="distance"></span> m</p>
-    </form>
     
     <div id="maptest"></div>
     
@@ -122,5 +123,14 @@
 
 maptest.on('click', MapTest);
 
+    
+    fetch("http://localhost:8080/getCode")
+    .then(response=> response.json())
+    .then(json=>
+          {document.getElementById("codeDisplay").innerHTML=json;
+    })
+    
+    
 </script>
 </html>
+
