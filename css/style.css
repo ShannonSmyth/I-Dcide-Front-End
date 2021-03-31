@@ -139,3 +139,54 @@ form {
   background: black;
   cursor: pointer;
 }
+
+#map {
+        height: 40%;
+        width: 100%;
+        left: 1%;
+      }
+
+.address {
+  display: block;
+  border-radius: 4px;
+  background-color: slategray;
+  border: 2px solid black;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 14px;
+  padding: 20px;
+  width: 200px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 50px;
+  position: relative;
+  top: 20px;
+  left: 40%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.address span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.address span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.address:hover span {
+  padding-right: 25px;
+}
+
+.address:hover span:after {
+  opacity: 1;
+  right: 0;
+}
