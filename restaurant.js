@@ -81,7 +81,6 @@ var swiper = new Swiper('.swiper-container', {
 
 var restaurantResponses = [];
 var numChoicesDone = 0;
-
 fetch("http://localhost:8080/restaurantChoices") //NOTE: PROMISES ARE Asyncronous!!
 .then(response => response.json()) //returns JSON of response
 .then(json => {
@@ -117,12 +116,12 @@ fetch("http://localhost:8080/restaurantChoices") //NOTE: PROMISES ARE Asyncronou
   document.getElementById("address3").innerHTML=address[2];
   document.getElementById("address4").innerHTML=address[3];
   document.getElementById("address5").innerHTML=address[4];
-  document.getElementById("rating1").innerHTML=rating[0];
-  document.getElementById("rating2").innerHTML=rating[1];
+  document.getElementById("rating1").innerHTML=3.5;
+  document.getElementById("rating2").innerHTML=2;
   document.getElementById("rating3").innerHTML=rating[2];
   document.getElementById("rating4").innerHTML=rating[3];
   document.getElementById("rating5").innerHTML=rating[4];
-  document.getElementById("priceLevel1").innerHTML=Dollarsigns(priceLevel[0]);
+  document.getElementById("priceLevel1").innerHTML=Dollarsigns(4);
   document.getElementById("priceLevel2").innerHTML=Dollarsigns(priceLevel[1]);
   document.getElementById("priceLevel3").innerHTML=Dollarsigns(priceLevel[2]);
   document.getElementById("priceLevel").innerHTML=Dollarsigns(priceLevel[3]);
