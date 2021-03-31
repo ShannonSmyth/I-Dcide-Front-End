@@ -116,16 +116,16 @@ fetch("http://localhost:8080/restaurantChoices") //NOTE: PROMISES ARE Asyncronou
   document.getElementById("address3").innerHTML=address[2];
   document.getElementById("address4").innerHTML=address[3];
   document.getElementById("address5").innerHTML=address[4];
-  document.getElementById("rating1").innerHTML=3.5;
-  document.getElementById("rating2").innerHTML=2;
+  document.getElementById("rating1").innerHTML=rating[0];
+  document.getElementById("rating2").innerHTML=rating[1];
   document.getElementById("rating3").innerHTML=rating[2];
   document.getElementById("rating4").innerHTML=rating[3];
   document.getElementById("rating5").innerHTML=rating[4];
-  document.getElementById("priceLevel1").innerHTML=Dollarsigns(4);
-  document.getElementById("priceLevel2").innerHTML=Dollarsigns(priceLevel[1]);
-  document.getElementById("priceLevel3").innerHTML=Dollarsigns(priceLevel[2]);
-  document.getElementById("priceLevel").innerHTML=Dollarsigns(priceLevel[3]);
-  document.getElementById("priceLevel").innerHTML=Dollarsigns(priceLevel[4]);
+  document.getElementById("priceLevel1").innerHTML=DollarSigns(priceLevel[0]);
+  document.getElementById("priceLevel2").innerHTML=DollarSigns(priceLevel[1]);
+  document.getElementById("priceLevel3").innerHTML=DollarSigns(priceLevel[2]);
+  document.getElementById("priceLevel").innerHTML=DollarSigns(priceLevel[3]);
+  document.getElementById("priceLevel").innerHTML=DollarSigns(priceLevel[4]);
 })
 
 
@@ -140,4 +140,11 @@ function postRestaurants(){
   .then(response => {
     window.location = "http://localhost:8080/";
   });
+}
+function GetCode(){
+  fetch("http//localhost:8080/getCode")
+  .then(response => response.json())
+  .then(json => {
+    document.getElementById("codeDisplay").innerHTML = json;
+  })
 }
