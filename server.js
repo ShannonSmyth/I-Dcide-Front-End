@@ -13,7 +13,7 @@ var placesAPI = require('./placesAPI.js');
 //Variables to get from maps API to send to API
 var longitude = -123.247665;
 var latitude = 49.270044; //coordinates = -26.228889,-52.670833
-var keyword = 'mexican'; //this is a parameter needed to specify a key word in the search of the API
+var keyword = 'restaurant'; //this is a parameter needed to specify a key word in the search of the API
 //var placeID = 'ChIJ_4mfbbhzhlQRMEEC_lcgKOE'; //testing id for Suika Japanese Restaurant
 
 var connection = mysql.createConnection({
@@ -102,12 +102,10 @@ app.get('/createGroup', function(request, response) { //sends to create group pa
 app.post('/createGroup', function(request, response) { // host puts info in, gets restaurant choices
   var sess = request.session;
   sess.username = request.body.username;
-  var distance = request.body.distance;
   // radius = parseInt(distance);
   // radius = radius*1000; //km to meters
   //var radius = 15000;
   var radius = sess.radius;
-
   //create group code
   var num1 = Math.floor(Math.random() * Math.floor(99));
   var num2 = Math.floor(Math.random() * Math.floor(99));
@@ -123,8 +121,8 @@ app.post('/createGroup', function(request, response) { // host puts info in, get
   //calling fucntion to print details
   //gettingInfo(placeID);
 
-  connection.query('INSERT INTO `Prototype1`.`Codes` (`CodeVal`,`leader`,`userName`,`distance`,`loginTime`,`finished`) VALUES (?,1,?,?,NOW(),0);', [code,sess.username,distance], function(error, results, fields) {
-  restaurant(sess.lat, sess.lng, radius, keyword, code, distance, sess.username); //This is where the API will fill in globalRestaurants object
+  connection.query('INSERT INTO `Prototype1`.`Codes` (`CodeVal`,`leader`,`userName`,`distance`,`loginTime`,`finished`) VALUES (?,1,?,?,NOW(),0);', [code,sess.username,radius], function(error, results, fields) {
+  restaurant(sess.lat, sess.lng, radius, keyword, code, sess.username); //This is where the API will fill in globalRestaurants object
   response.redirect('/restaurantDecide');
   response.end();
   });
@@ -177,6 +175,7 @@ app.get('/restaurantChoices', function(request, response){ //send restaurant cho
       response.json(JSON.stringify(names));
     }
     names(results)
+    console.log(results)
   });
 
 })
@@ -212,12 +211,10 @@ app.get('/Results', function(request, response) { //display group code
 });
 
 app.get('/sendResults', function(request, response) {
-  //console.log("now we are here");
   var sess = request.session;
   var users = [];
-  connection.query('SELECT userName,choice1,choice2,choice3,choice4,choice5 FROM `Prototype1`.`Codes` WHERE codeVal = ?;', [1], function(error, results, fields) { //return to codeVal later
-    //console.log(results);
-    users[0] = results; 
+  connection.query('SELECT userName,choice1,choice2,choice3,choice4,choice5 FROM `Prototype1`.`Codes` WHERE codeVal = ?;', [sess.code], function(error, results, fields) {
+    users[0] = results;
     users[1] = sess.username;
     response.json(JSON.stringify(users));
   });
@@ -239,7 +236,7 @@ app.post('/logout', function(request, response) {
   response.redirect('/');
 });
 
-function restaurant(latitude, longitude, radius, keyword, code, distance, username){
+function restaurant(latitude, longitude, radius, keyword, code, username){
   var lat = latitude;
   var lon = longitude;
   var output = 'json';
@@ -336,6 +333,15 @@ app.post('/address', function(request, response) { //display group code
   coordinates(address)
 });
 
+app.post('/RadiusBackup', function(request, response) { //display group code
+  var values = request.body;
+  var sess = request.session;
+  sess.radius = values[0];
+  response.end();
+});
+
+
+
 // app.get('/address', function(request, response) { //display group code
 //   var sess = request.session;
 //   async function coordinates(address){
@@ -350,11 +356,6 @@ app.post('/address', function(request, response) { //display group code
 
 app.get('/a', function(request, response) { //display group code
   response.sendFile(path.join(__dirname + '/enter_address.html'));
-});
-
-app.get('/b', function(request, response) { //display group code
-  response.sendFile(path.join(__dirname + '/results.html'));
-  //response.sendFile(path.join(__dirname + '/testDisplay.html'));
 });
 
 // app.get('/a', function(request, response) { //display group code
