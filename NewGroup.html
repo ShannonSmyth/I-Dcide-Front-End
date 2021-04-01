@@ -10,38 +10,30 @@
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-<style>
-    #maptest{
-        height: 600px;
-        width: 40%;
-        left: 30%
-    }
-</style>
     
 <body class = "fullscreen">
     <div class="container">
 
     <form id="LeadUser" action="createGroup" method="POST">
-    <p><label>Enter your name: <input name="username" required></label></p>
-              
+    <p><label><input name="username" value="Your Name" required></label></p>
+    </form> 
+        
     <div>
-        <p class = "text">Enter address 
-        <input type="text" id="address" value="UBC">
+        <p>
+        <input type="text" id="address" value="Address">
         </p>
-        <button class="address" onclick="onMapClick()">Go to address</button>
     </div>
-    <p id="lat"></p>
-    <p id="long"></p>
-              
-    <p class="text">Restaurant proximity:</p>
+    
+    <button class="address" onclick="onMapClick()">Go</button>
+    <div id="lat" class="tiny"></div>
+    <div id="long" class="tiny"></div>          
+    <p class="text">Radius: <span id="distance"></span> m</p>
         <input type="range" min="1" max="5000" value="500" class="slider" id="myRange" name="distance">
-    <p class="text"> <span id="distance"></span> m</p>
-    </form>
     
     <div id="maptest"></div>
     
     <button class="movingon" onclick= "submitting()"><span>START</span></button>
-    <button class="movingon" onclick= "back()"><span>Back to beginning</span></button>
+    <button class="homepage" onclick= "back()"><span>Back to beginning</span></button>
           
     </div>
 
@@ -66,7 +58,7 @@
         myForm.submit(); //submit the form contents
     }
         
-    var myloc = new L.LatLng(51.5, -0.09);
+    var myloc = new L.LatLng(49.26060520000001, -123.2459938);
     var maptest=L.map('maptest').setView(myloc, 13);
     
     L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
@@ -78,7 +70,7 @@
         accessToken: 'pk.eyJ1Ijoic25haWxubjcyIiwiYSI6ImNrbXdqN2ZuNzBmaWEyb2xkNzBreGhvcWoifQ.0k1kjyMSsFYDRy4BFtev5Q'
     }).addTo(maptest);
     
-    var marker = L.marker([51.5, -0.09]).addTo(maptest);
+    var marker = L.marker([49.26060520000001, -123.2459938]).addTo(maptest);
     
     var circle = L.circle(myloc, {
         color: 'red',
@@ -111,6 +103,7 @@
             circle.setLatLng([latitude, longitude]);
             circle.setRadius(500);
             maptest.setView([latitude, longitude], 13);
+            marker.setLatLng([latitude, longitude]);
         })
     }
     
@@ -122,5 +115,7 @@
 
 maptest.on('click', MapTest);
 
+    
 </script>
 </html>
+

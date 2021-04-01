@@ -20,10 +20,12 @@ html,
     text-align: center;
 }
 
-.testertext {
-    font-size: 2rem;
-    color: red;
-
+.text{
+    font-size: 1rem;
+    color: slategrey;
+    text-align: center;
+    top: 5%;
+    padding: 0;
 }
 
 .movingon {
@@ -34,13 +36,13 @@ html,
   color: #FFFFFF;
   text-align: center;
   font-size: 28px;
-  padding: 20px;
-  width: 400px;
+  padding: 15px;
+  width: 300px;
   transition: all 0.5s;
   cursor: pointer;
   margin: 5px;
   position: relative;
-  top: 10%;
+  top: 5%;
   left: 50%;
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
@@ -71,27 +73,6 @@ html,
   right: 0;
 }
 
-
-.codegen {
-  display: block;
-  border-radius: 4px;
-  background-color: black;
-  border: 2px solid black;
-  color: #FFFFFF;
-  text-align: center;
-  font-size: 32px;
-  padding: 20px;
-  width: 400px;
-  cursor: pointer;
-  margin: 5px;
-  position: relative;
-  top: 10%;
-  left: 50%;
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-}
-
-
 .container {
   height: 800px;
   position: relative;
@@ -102,6 +83,13 @@ html,
 form {
     display: inline-block;
     font-size: 24px;
+}
+
+input{
+    width: 300px;
+    height: 50px;
+    left: 50%;
+    top: 5%;
 }
 
 .slidecontainer {
@@ -118,6 +106,7 @@ form {
   -webkit-transition: .2s;
   transition: opacity .2s;
     position: center;
+    top: 0%;
 }
 
 .slider:hover {
@@ -138,4 +127,90 @@ form {
   height: 25px;
   background: black;
   cursor: pointer;
+}
+
+.homepage {
+  display: block;
+  border-radius: 4px;
+  background-color: white;
+  border: 2px solid white;
+  color: dimgray;
+  text-align: center;
+  font-size: 18px;
+  padding: 5px;
+  width: 300px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+  position: relative;
+  top: 3%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.homepage span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.homepage span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.address {
+  display: block;
+  border-radius: 2px;
+  background-color: slategray;
+  border: 1px solid black;
+  color: white;
+  text-align: center;
+  font-size: 20px;
+  padding: 3px;
+  width: 70px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+  position: relative;
+  top: 1%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.address span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.address span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+
+ #maptest{
+        height: 250px;
+        width: 300px;
+     left: 10%;
+    }
+
+.tiny{
+    font-size: 0.01rem;
+    color: white;
+    text-align: center;
+    top: 0%;
 }
