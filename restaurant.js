@@ -142,9 +142,9 @@ function postRestaurants(){
   });
 }
 function GetCode(){
-  fetch("http//localhost:8080/getCode")
+  fetch("http://localhost:8080/getCode")
   .then(response => response.json())
   .then(json => {
-    document.getElementById("codeDisplay").innerHTML = json;
+    document.getElementById("codeDisplay").innerHTML =" "+json;
   })
 }
