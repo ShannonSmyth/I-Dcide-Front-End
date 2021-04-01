@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Title of the document</title>
+    </head>
+
+    <body>
+        The content of the document......
+        <p id = "choice1"></p>
+        <p id = "choice2"></p>
+
+    </body>
+    <script>
+        //global variables I will add to the script
+        var choicesNum = [];
+        var choicesLetter = [];
+
+        //fetch request to acces the database infromation
+        fetch("http://localhost:8080/sendResults")
+            .then(response => response.json()) //returns JSON of response
+            .then(json => { //JSON is still a string
+                var users = JSON.parse(json); //turn string into object to access parts
+                var test = users[0];
+                //console.log(test[0].choice1);
+                //assigning choices into choicesNum array
+                choicesNum[0] = test[0].choice1;
+                choicesNum[1] = test[0].choice2;
+                choicesNum[2] = test[0].choice3;
+                choicesNum[3] = test[0].choice4;
+                choicesNum[4] = test[0].choice5;
+                //console.log(choicesNum);
+                //loop to turn 1 and 0 to yes and no
+                for(i = 0; i < choicesNum.length; i++){
+                    if(choicesNum[i] == 0){
+                        choicesLetter[i] = "No";
+                    }
+                    else{
+                        choicesLetter[i] = "Yes";
+                    }
+                    }
+                console.log(choicesNum);
+                console.log(choicesLetter);
+                console.log(choicesNum[0]);
+
+                document.getElementById("choice1").innerHTML = choicesNum[0];
+                document.getElementById("choice2").innerHTML = choicesLetter[0];
+
+                //Tally all of the entries
+                
+            })
+
+    </script>
+</html>

@@ -11,8 +11,8 @@ var request = require('request');
 //variable to use API from export
 var placesAPI = require('./placesAPI.js');
 //Variables to get from maps API to send to API
-// var longitude = -123.247665;
-// var latitude = 49.270044; //coordinates = -26.228889,-52.670833
+var longitude = -123.247665;
+var latitude = 49.270044; //coordinates = -26.228889,-52.670833
 var keyword = 'mexican'; //this is a parameter needed to specify a key word in the search of the API
 //var placeID = 'ChIJ_4mfbbhzhlQRMEEC_lcgKOE'; //testing id for Suika Japanese Restaurant
 
@@ -103,8 +103,10 @@ app.post('/createGroup', function(request, response) { // host puts info in, get
   var sess = request.session;
   sess.username = request.body.username;
   var distance = request.body.distance;
-  radius = parseInt(distance);
-  radius = radius*1000; //km to meters
+  // radius = parseInt(distance);
+  // radius = radius*1000; //km to meters
+  //var radius = 15000;
+  var radius = sess.radius;
 
   //create group code
   var num1 = Math.floor(Math.random() * Math.floor(99));
@@ -122,7 +124,7 @@ app.post('/createGroup', function(request, response) { // host puts info in, get
   //gettingInfo(placeID);
 
   connection.query('INSERT INTO `Prototype1`.`Codes` (`CodeVal`,`leader`,`userName`,`distance`,`loginTime`,`finished`) VALUES (?,1,?,?,NOW(),0);', [code,sess.username,distance], function(error, results, fields) {
-  restaurant(latitude, longitude, radius, keyword, code, distance, sess.username); //This is where the API will fill in globalRestaurants object
+  restaurant(sess.lat, sess.lng, radius, keyword, code, distance, sess.username); //This is where the API will fill in globalRestaurants object
   response.redirect('/restaurantDecide');
   response.end();
   });
@@ -154,17 +156,27 @@ app.get('/restaurantDecide', function(request, response){ //restaurant decision 
 app.get('/restaurantChoices', function(request, response){ //send restaurant choices to client
   var sess = request.session;
   connection.query('SELECT rest1,rest2,rest3,rest4,rest5 FROM `Prototype1`.`Codes` WHERE codeVal = ? AND leader = 1;', [sess.code], function(error, results, fields) {
-    async function names(){
+    async function names(values){
       var names = [];
-      names[0] = await gettingInfo(results[0].rest1)
-      names[1] = await gettingInfo(results[0].rest2)
-      names[2] = await gettingInfo(results[0].rest3)
-      names[3] = await gettingInfo(results[0].rest4)
-      names[4] = await gettingInfo(results[0].rest5)
+      // names[0] = await gettingInfo(results[0].rest1)
+      // names[1] = await gettingInfo(results[0].rest2)
+      // names[2] = await gettingInfo(results[0].rest3)
+      // names[3] = await gettingInfo(results[0].rest4)
+      // names[4] = await gettingInfo(results[0].rest5)
+      names[0] = await gettingInfo(values[0].rest1)
+      names[1] = await gettingInfo(values[0].rest2)
+      names[2] = await gettingInfo(values[0].rest3)
+      names[3] = await gettingInfo(values[0].rest4)
+      names[4] = await gettingInfo(values[0].rest5)
+      // names[0] = await gettingInfo("ChIJkYNgwtZzhlQRDyKMepVlARQ")
+      // names[1] = await gettingInfo("ChIJYyXi7YNxhlQRUxgGSBaVYGc")
+      // names[2] = await gettingInfo("ChIJgzLyCINxhlQRkHq8urzYQ2Y")
+      // names[3] = await gettingInfo("ChIJud95Kud0hlQRIdd23A7LyZQ")
+      // names[4] = await gettingInfo("ChIJcZ0Yt8x0hlQR4MGXF9c5cL8")
       //console.log(names)
       response.json(JSON.stringify(names));
     }
-    names()
+    names(results)
   });
 
 })
@@ -195,15 +207,17 @@ app.get('/username', function(request, response) { //get username of clients, an
 });
 
 app.get('/Results', function(request, response) { //display group code
-  response.sendFile(path.join(__dirname + '/results.html'));
+  response.sendFile(path.join(__dirname + '/Results.html'));
   app.use(express.static('Results Page Files'));
 });
 
 app.get('/sendResults', function(request, response) {
+  //console.log("now we are here");
   var sess = request.session;
   var users = [];
-  connection.query('SELECT userName,choice1,choice2,choice3,choice4,choice5 FROM `Prototype1`.`Codes` WHERE codeVal = ?;', [sess.code], function(error, results, fields) {
-    users[0] = results;
+  connection.query('SELECT userName,choice1,choice2,choice3,choice4,choice5 FROM `Prototype1`.`Codes` WHERE codeVal = ?;', [1], function(error, results, fields) { //return to codeVal later
+    //console.log(results);
+    users[0] = results; 
     users[1] = sess.username;
     response.json(JSON.stringify(users));
   });
@@ -240,6 +254,7 @@ function restaurant(latitude, longitude, radius, keyword, code, distance, userna
   .then(results =>{
     //result = results[1].name;
     //console.log(results[1].place_id);
+    //console.log(results)
     //console.log(results)
     connection.query('UPDATE `Prototype1`.`Codes` SET rest1 = ?, rest2 = ?, rest3 = ?, rest4 = ?, rest5 = ? WHERE codeVal = ? AND userName = ?;', [results[1].place_id, results[2].place_id, results[3].place_id, results[4].place_id, results[5].place_id, code, username], function(error, results, fields) {
     });
@@ -305,14 +320,17 @@ function getCoordinates(address) {
 }
 
 app.post('/address', function(request, response) { //display group code
-  var address = request.body;
+  var values = request.body;
   var sess = request.session;
+  address = values[0];
+  sess.radius = values[1];
   //response.json(JSON.stringify(address));
   async function coordinates(address){
     var addy = await getCoordinates(address);
-    console.log(addy[0]+" "+addy[1])
+    //console.log(addy[0]+" "+addy[1])
     sess.lat = addy[0];
     sess.lng = addy[1];
+    //console.log(sess.lng)
     response.json(JSON.stringify(addy));
   }
   coordinates(address)
@@ -332,6 +350,11 @@ app.post('/address', function(request, response) { //display group code
 
 app.get('/a', function(request, response) { //display group code
   response.sendFile(path.join(__dirname + '/enter_address.html'));
+});
+
+app.get('/b', function(request, response) { //display group code
+  response.sendFile(path.join(__dirname + '/results.html'));
+  //response.sendFile(path.join(__dirname + '/testDisplay.html'));
 });
 
 // app.get('/a', function(request, response) { //display group code

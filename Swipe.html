@@ -98,31 +98,16 @@
 
     .swiper-container {
       width: 92%;
-      height: 90%;
+      height: 85%;
       position: relative;
       top: 5%;
-      bottom: 5%
+      bottom: 10%
     }
 
     .swiper-slide {
       text-align: center;
       font-size: 18px;
       background: #fff;
-
-      /* Center slide text vertically */
-     /* display: -webkit-box;
-      display: -ms-flexbox;
-      display: -webkit-flex;
-      display: flex;
-      -webkit-box-pack: top;
-      -ms-flex-pack: top;
-      -webkit-justify-content: top;
-      justify-content: top;
-      -webkit-box-align: top;
-      -ms-flex-align: top;
-      -webkit-align-items: top;
-      align-items: top;
-      */
     }
 
     .swiper-slide .title {
@@ -138,18 +123,26 @@
       font-size: 14px;
       max-width: 400px;
       line-height: 1.3;
-      position: center;
+      position: relative;
     }
     p.DollarSign{
       font-size: 25px;
       color: slategrey;
       font-style: italic;
       position: relative;
-      right: 200px;
+      left: 15px;
+      display: inline;
+    }
+    p.NewText{
+      font-size:20px;
+      color: slategrey;
+      font-style: italic;
+      position: relative;
+      display: inline;
     }
   </style>
+  
 </head>
-
 <body>
   <!-- Swiper -->
   <div class="swiper-container">
@@ -161,10 +154,11 @@
       <br>
       <p class ="DollarSign" id="priceLevel1"></p>
       <br>
-      <i class="fa fa-star"></i> <p class = "text" id = "rating1">/5</p>
-      <br>
-    <div id = "address1" class = "text"></div>
-    
+      <p class ="DollarSign" id = "rating1"></p> <p class = "DollarSign">/5 <i class="fa fa-star" style ="color:gold" id ="DollarSign"></i></p>
+    <br>
+    <p id = "address1" class = "NewText"></p>
+    <br>
+    <p class = "NewText"> Your Group Code Is:</p><p id ="codeDisplay" class = "DollarSign"></p>
   </div>
     <div class="swiper-slide">
         <img id="image2" style ="height: 50vh;">
@@ -173,10 +167,12 @@
          <br>
         <p class ="DollarSign" id="priceLevel2"></p>
           <br>
-        <i class="fa fa-star"></i> <p class = "text" id = "rating2">/5</p>
+          <p class ="DollarSign" id = "rating2"></p> <p class = "DollarSign">/5 <i class="fa fa-star" style ="color:gold" id ="DollarSign"></i></p>
          <br>
-        <div id = "address2" class = "text"></div>
-        
+        <p id = "address2" class = "NewText"></p>
+        <br>
+        <p class = "NewText"> Your Group Code Is:</p><p id ="codeDisplay" class = "DollarSign"></p>
+
       </div>
     <div class="swiper-slide">
         <img id="image3" style ="height: 50vh;">
@@ -185,9 +181,10 @@
         <br>
         <p class ="DollarSign" id="priceLevel3"></p>
         <br>
-        <i class="fa fa-star"></i> <p class = "text" id = "rating3">/5</p>
+        <p class ="DollarSign" id = "rating3"></p> <p class = "DollarSign">/5 <i class="fa fa-star" style ="color:gold" id ="DollarSign"></i></p>
         <br>
-      <div id = "address3" class = "text"></div>
+      <p id = "address3" class = "NewText"></p>
+      <p class = "NewText"> Your Group Code Is:</p><p id ="codeDisplay" class = "DollarSign"></p>
     </div>
     <div class="swiper-slide">
         <img id="image4" style ="height: 50vh;">
@@ -196,20 +193,24 @@
          <br>
         <p class ="DollarSign" id="priceLevel4"></p>
           <br>
-        <i class="fa fa-star"></i> <p class = "text" id = "rating3">/5</p>
+          <p class ="DollarSign" id = "rating4"></p> <p class = "DollarSign">/5 <i class="fa fa-star" style ="color:gold" id ="DollarSign"></i></p>
           <br>
-        <div id = "address4" class = "text"></div>
+        <p id = "address4" class = "NewText"></p>
+        <br>
+        <p class = "NewText"> Your Group Code Is:</p><p id ="codeDisplay" class = "DollarSign"></p>
       </div>
     <div class="swiper-slide">
-        <img id="image5" style ="height: 40vh;">
+        <img id="image5" style ="height: 50vh;">
          <br>
         <div id = "option5" class="title"></div>
          <br>
         <p class ="DollarSign" id="priceLevel5"></p>
          <br>
-        <i class="fa fa-star"></i> <p class = "text" id = "rating5">/5</p>
+         <p class ="DollarSign" id = "rating5"></p> <p class = "DollarSign">/5 <i class="fa fa-star" style ="color:gold" id ="DollarSign"></i></p>
          <br>
-        <div id = "address5" class = "text"></div>
+        <p id = "address5" class = "NewText"></p>
+        <br>
+        <p class = "NewText"> Your Group Code Is:</p><p id ="codeDisplay" class = "DollarSign"></p>
       </div> 
 
   <!-- Swiper JS -->

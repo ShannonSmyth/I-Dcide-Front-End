@@ -36,7 +36,7 @@ var myPlugin = {
         };
     },
     touchEnd: function(swiper, touchEnd){
-      console.log(Right);
+      getCode();
       if(Right === true){
         swiper.slideNext(100,true);
         }
@@ -65,7 +65,10 @@ function DollarSigns(number){
    case 4:
    return "$$$$";
    case 5:
-  return "$$$$$";
+    return "$$$$$";
+   default:
+     return "Price Unavailable";
+
   }
   }
   
@@ -81,7 +84,6 @@ var swiper = new Swiper('.swiper-container', {
 
 var restaurantResponses = [];
 var numChoicesDone = 0;
-
 fetch("http://localhost:8080/restaurantChoices") //NOTE: PROMISES ARE Asyncronous!!
 .then(response => response.json()) //returns JSON of response
 .then(json => {
@@ -122,11 +124,11 @@ fetch("http://localhost:8080/restaurantChoices") //NOTE: PROMISES ARE Asyncronou
   document.getElementById("rating3").innerHTML=rating[2];
   document.getElementById("rating4").innerHTML=rating[3];
   document.getElementById("rating5").innerHTML=rating[4];
-  document.getElementById("priceLevel1").innerHTML=Dollarsigns(priceLevel[0]);
-  document.getElementById("priceLevel2").innerHTML=Dollarsigns(priceLevel[1]);
-  document.getElementById("priceLevel3").innerHTML=Dollarsigns(priceLevel[2]);
-  document.getElementById("priceLevel").innerHTML=Dollarsigns(priceLevel[3]);
-  document.getElementById("priceLevel").innerHTML=Dollarsigns(priceLevel[4]);
+  document.getElementById("priceLevel1").innerHTML=DollarSigns(priceLevel[0]);
+  document.getElementById("priceLevel2").innerHTML=DollarSigns(priceLevel[1]);
+  document.getElementById("priceLevel3").innerHTML=DollarSigns(priceLevel[2]);
+  document.getElementById("priceLevel").innerHTML=DollarSigns(priceLevel[3]);
+  document.getElementById("priceLevel").innerHTML=DollarSigns(priceLevel[4]);
 })
 
 
@@ -142,3 +144,11 @@ function postRestaurants(){
     window.location = "http://localhost:8080/";
   });
 }
+function getCode(){
+  fetch("http://localhost:8080/getCode")
+  .then(response => response.json())
+  .then(json => {
+    document.getElementById("codeDisplay").innerHTML =" "+json;
+  })
+}
+getCode();

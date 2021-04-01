@@ -3,43 +3,124 @@
 <head>
     <meta charset="utf-8">
     <title> New Group </title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     <link rel="stylesheet" href="/style.css" type='text/css'>
+     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+    crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <body class = "fullscreen">
-      <div class="container">
-
-          <form id="LeadUser" action="createGroup" method="POST">
-              <p><label>Enter your name: <input name="username" required></label></p>
-              <h1 class="title">Options</h1>
-              <p class="text">Restaurant proximity:</p>
-              <input type="range" min="1" max="100" value="50" class="slider" id="myRange" name="distance">
-              <p class="text"> <span id="distance"></span> km</p>
-          </form>
-
-          <button class="movingon" onclick= "submitting()"><span>START</span></button>
-          <button class="movingon" onclick= "back()"><span>Back to beginning</span></button>
-      </div>
-
-    </body>
-    <script>
-        var slider = document.getElementById("myRange");
-        var output = document.getElementById("distance");
-        output.innerHTML = slider.value;
-
-        slider.oninput = function() {
-          output.innerHTML = this.value;
-        }
-
-        function back(){
-          window.location = "http://localhost:8080/";
-        }
-
-        function submitting(){ //submit the form and location
-          var myForm = document.getElementById("LeadUser");
-          myForm.submit(); //submit the form contents
-
-        }
-
-    </script>
 </head>
+<style>
+    #maptest{
+        height: 600px;
+        width: 40%;
+        left: 30%
+    }
+</style>
+    
+<body class = "fullscreen">
+    <div class="container">
+
+    <form id="LeadUser" action="createGroup" method="POST">
+    <p><label>Enter your name: <input name="username" required></label></p>
+              
+    <div>
+        <p class = "text">Enter address 
+        <input type="text" id="address" value="UBC">
+        </p>
+        <button class="address" onclick="onMapClick()">Go to address</button>
+    </div>
+    <p id="lat"></p>
+    <p id="long"></p>
+              
+    <p class="text">Restaurant proximity:</p>
+        <input type="range" min="1" max="5000" value="500" class="slider" id="myRange" name="distance">
+    <p class="text"> <span id="distance"></span> m</p>
+    </form>
+    
+    <div id="maptest"></div>
+    
+    <button class="movingon" onclick= "submitting()"><span>START</span></button>
+    <button class="movingon" onclick= "back()"><span>Back to beginning</span></button>
+          
+    </div>
+
+</body>
+<script>
+        
+    var slider = document.getElementById("myRange");
+    var output = document.getElementById("distance");
+    output.innerHTML = slider.value;
+        
+    slider.onchange = function() {
+        output.innerHTML = this.value;
+        update(this.value);
+    }
+
+    function back(){
+        window.location = "http://localhost:8080/";
+    }
+
+    function submitting(){ //submit the form and location
+        var myForm = document.getElementById("LeadUser");
+        myForm.submit(); //submit the form contents
+    }
+        
+    var myloc = new L.LatLng(51.5, -0.09);
+    var maptest=L.map('maptest').setView(myloc, 13);
+    
+    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+        maxZoom: 18,
+        id: 'mapbox/streets-v11',
+        tileSize: 512,
+        zoomOffset: -1,
+        accessToken: 'pk.eyJ1Ijoic25haWxubjcyIiwiYSI6ImNrbXdqN2ZuNzBmaWEyb2xkNzBreGhvcWoifQ.0k1kjyMSsFYDRy4BFtev5Q'
+    }).addTo(maptest);
+    
+    var marker = L.marker([51.5, -0.09]).addTo(maptest);
+    
+    var circle = L.circle(myloc, {
+        color: 'red',
+        fillColor: '#f03',
+        fillOpacity: 0.5,
+        radius: 500
+    }).addTo(maptest);
+    
+    slider.oninput = function() {
+        output.innerHTML = this.value;
+        circle.setRadius(this.value); // Sets the radius of the circle to be the value of the slider
+    }
+
+    function onMapClick(){
+        var address = [];
+        address[0] = document.getElementById("address").value;
+        fetch('http://localhost:8080/address', {
+            method: 'POST',
+            body: JSON.stringify(address),
+            headers: {
+		          'Content-type': 'application/json; charset=UTF-8'
+		      }
+        })
+        .then(response => response.json())
+        .then(json =>{
+            console.log(json);
+            json = JSON.parse(json);
+            var latitude = document.getElementById("lat").innerHTML=json[0];
+            var longitude = document.getElementById("long").innerHTML=json[1];
+            circle.setLatLng([latitude, longitude]);
+            circle.setRadius(500);
+            maptest.setView([latitude, longitude], 13);
+        })
+    }
+    
+    function MapTest(){
+        circle.setLatLng([39, -120]);
+        circle.setRadius(500);
+        maptest.setView([39, -120], 13);
+    }
+
+maptest.on('click', MapTest);
+
+</script>
 </html>
