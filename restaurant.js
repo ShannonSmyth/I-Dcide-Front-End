@@ -36,7 +36,7 @@ var myPlugin = {
         };
     },
     touchEnd: function(swiper, touchEnd){
-      console.log(Right);
+      getCode();
       if(Right === true){
         swiper.slideNext(100,true);
         }
@@ -65,7 +65,10 @@ function DollarSigns(number){
    case 4:
    return "$$$$";
    case 5:
-  return "$$$$$";
+    return "$$$$$";
+   default:
+     return "Price Unavailable";
+
   }
   }
   
@@ -141,10 +144,11 @@ function postRestaurants(){
     window.location = "http://localhost:8080/";
   });
 }
-function GetCode(){
+function getCode(){
   fetch("http://localhost:8080/getCode")
   .then(response => response.json())
   .then(json => {
     document.getElementById("codeDisplay").innerHTML =" "+json;
   })
 }
+getCode();
