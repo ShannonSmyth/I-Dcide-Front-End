@@ -10,42 +10,42 @@
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-    
 <body class = "fullscreen">
     <div class="container">
 
     <form id="LeadUser" action="createGroup" method="POST">
     <p><label><input name="username" value="Your Name" required></label></p>
-    </form> 
-        
+    </form>
+
     <div>
         <p>
         <input type="text" id="address" value="Address">
         </p>
     </div>
-    
+
     <button class="address" onclick="onMapClick()">Go</button>
     <div id="lat" class="tiny"></div>
-    <div id="long" class="tiny"></div>          
+    <div id="long" class="tiny"></div>
     <p class="text">Radius: <span id="distance"></span> m</p>
         <input type="range" min="1" max="5000" value="500" class="slider" id="myRange" name="distance">
-    
+
     <div id="maptest"></div>
-    
+
     <button class="movingon" onclick= "submitting()"><span>START</span></button>
     <button class="homepage" onclick= "back()"><span>Back to beginning</span></button>
-          
+
     </div>
 
 </body>
 <script>
-        
+
     var slider = document.getElementById("myRange");
     var output = document.getElementById("distance");
     output.innerHTML = slider.value;
-        
+
     slider.onchange = function() {
         output.innerHTML = this.value;
+        address[1] = this.value;
         update(this.value);
     }
 
@@ -57,10 +57,10 @@
         var myForm = document.getElementById("LeadUser");
         myForm.submit(); //submit the form contents
     }
-        
+
     var myloc = new L.LatLng(49.26060520000001, -123.2459938);
     var maptest=L.map('maptest').setView(myloc, 13);
-    
+
     L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
         maxZoom: 18,
@@ -69,23 +69,23 @@
         zoomOffset: -1,
         accessToken: 'pk.eyJ1Ijoic25haWxubjcyIiwiYSI6ImNrbXdqN2ZuNzBmaWEyb2xkNzBreGhvcWoifQ.0k1kjyMSsFYDRy4BFtev5Q'
     }).addTo(maptest);
-    
+
     var marker = L.marker([49.26060520000001, -123.2459938]).addTo(maptest);
-    
+
     var circle = L.circle(myloc, {
         color: 'red',
         fillColor: '#f03',
         fillOpacity: 0.5,
         radius: 500
     }).addTo(maptest);
-    
     slider.oninput = function() {
         output.innerHTML = this.value;
         circle.setRadius(this.value); // Sets the radius of the circle to be the value of the slider
     }
 
+var address = [];
+address[1] = 500;
     function onMapClick(){
-        var address = [];
         address[0] = document.getElementById("address").value;
         fetch('http://localhost:8080/address', {
             method: 'POST',
@@ -106,7 +106,7 @@
             marker.setLatLng([latitude, longitude]);
         })
     }
-    
+
     function MapTest(){
         circle.setLatLng([39, -120]);
         circle.setRadius(500);
@@ -115,7 +115,5 @@
 
 maptest.on('click', MapTest);
 
-    
 </script>
 </html>
-
