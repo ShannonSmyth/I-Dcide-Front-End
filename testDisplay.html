@@ -7,8 +7,11 @@
 
     <body>
         The content of the document......
-        <p id = "choice1"></p>
+        <div id = "choice1"></div>
         <p id = "choice2"></p>
+        <p id = "choice3"></p>
+        <p id = "choice4"></p>
+        <p id = "choice5"></p>
 
     </body>
     <script>
@@ -21,15 +24,28 @@
             .then(response => response.json()) //returns JSON of response
             .then(json => { //JSON is still a string
                 var users = JSON.parse(json); //turn string into object to access parts
-                var test = users[0];
-                //console.log(test[0].choice1);
-                //assigning choices into choicesNum array
-                choicesNum[0] = test[0].choice1;
-                choicesNum[1] = test[0].choice2;
-                choicesNum[2] = test[0].choice3;
-                choicesNum[3] = test[0].choice4;
-                choicesNum[4] = test[0].choice5;
-                //console.log(choicesNum);
+                var testingUser = users[0];
+                var size = Object.keys(testingUser).length;//Size of our objects = how many users
+                
+                //var my_name = users[1]; //client name is in array postion 1
+                var my_name = "P"; //NOTE:I will need to change this part to the sess.username once we fully integrate like line above
+                var index = 0; //setting index to identify user
+
+                //finding which user we are looking up and adding theri results to the choicesNum Array
+                // NOTE:figure out how to fix length
+                for(var i = 0; i< size; i++){
+                        if(testingUser[i].userName == my_name){
+                            console.log(`I am ${my_name}`);
+                            //assigning choices into choicesNum array
+                            choicesNum[0] = testingUser[i].choice1;
+                            choicesNum[1] = testingUser[i].choice2;
+                            choicesNum[2] = testingUser[i].choice3;
+                            choicesNum[3] = testingUser[i].choice4;
+                            choicesNum[4] = testingUser[i].choice5;
+                            break;
+                        }
+                }
+                
                 //loop to turn 1 and 0 to yes and no
                 for(i = 0; i < choicesNum.length; i++){
                     if(choicesNum[i] == 0){
@@ -41,12 +57,32 @@
                     }
                 console.log(choicesNum);
                 console.log(choicesLetter);
-                console.log(choicesNum[0]);
 
-                document.getElementById("choice1").innerHTML = choicesNum[0];
-                document.getElementById("choice2").innerHTML = choicesLetter[0];
+                document.getElementById("choice1").innerHTML = choicesLetter[0];
+                document.getElementById("choice2").innerHTML = choicesLetter[1];
+                document.getElementById("choice3").innerHTML = choicesLetter[2];
+                document.getElementById("choice4").innerHTML = choicesLetter[3];
+                document.getElementById("choice5").innerHTML = choicesLetter[4];
 
                 //Tally all of the entries
+                var numOfYes = [0, 0, 0 , 0, 0]; //array for number of yes. Element 0 is choice 1 ... element 4 is choice 5
+                var numOfNo = [];  //array for number of no. Element 0 is choice 1
+                
+                //add up the result of each user
+                for(i = 0; i < size; i++){
+                    numOfYes[0] += testingUser[i].choice1;
+                    numOfYes[1] += testingUser[i].choice2;
+                    numOfYes[2] += testingUser[i].choice3;
+                    numOfYes[3] += testingUser[i].choice4;
+                    numOfYes[4] += testingUser[i].choice5;
+                }
+                //fill in num of No
+                for(i = 0; i < 5; i++){
+                    numOfNo[i] = size - numOfYes[i];
+                }
+
+                console.log(numOfYes);
+                console.log(numOfNo);
                 
             })
 

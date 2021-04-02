@@ -108,6 +108,8 @@ app.post('/createGroup', function(request, response) { // host puts info in, get
   //var radius = 15000;
   var radius = sess.radius;
 
+  //console.log(sess.username);
+
   //create group code
   var num1 = Math.floor(Math.random() * Math.floor(99));
   var num2 = Math.floor(Math.random() * Math.floor(99));
@@ -212,13 +214,15 @@ app.get('/Results', function(request, response) { //display group code
 });
 
 app.get('/sendResults', function(request, response) {
-  //console.log("now we are here");
+  console.log("now we are here");
   var sess = request.session;
   var users = [];
   connection.query('SELECT userName,choice1,choice2,choice3,choice4,choice5 FROM `Prototype1`.`Codes` WHERE codeVal = ?;', [1], function(error, results, fields) { //return to codeVal later
-    //console.log(results);
+    console.log(results);
     users[0] = results; 
+    //var users2 = users[0];
     users[1] = sess.username;
+    //console.log(users2[0].userName);
     response.json(JSON.stringify(users));
   });
 });
