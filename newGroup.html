@@ -10,16 +10,17 @@
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
+
 <body class = "fullscreen">
     <div class="container">
 
     <form id="LeadUser" action="createGroup" method="POST">
-    <p><label><input name="username" value="Your Name" required></label></p>
+      <p><input name="username" placeholder="Your Name" required></p>
     </form>
 
     <div>
         <p>
-        <input type="text" id="address" value="Address">
+        <input type="text" id="address" placeholder="Address">
         </p>
     </div>
 
@@ -38,7 +39,7 @@
 
 </body>
 <script>
-
+    var slide;
     var slider = document.getElementById("myRange");
     var output = document.getElementById("distance");
     output.innerHTML = slider.value;
@@ -46,6 +47,8 @@
     slider.onchange = function() {
         output.innerHTML = this.value;
         address[1] = this.value;
+        slide = this.value;
+        radiusSend(slide);
         update(this.value);
     }
 
@@ -56,6 +59,21 @@
     function submitting(){ //submit the form and location
         var myForm = document.getElementById("LeadUser");
         myForm.submit(); //submit the form contents
+    }
+
+    var radSend = [];
+    function radiusSend(send){ //submit the radius backup
+      radSend[0] = send;
+      fetch('http://localhost:8080/RadiusBackup', {
+          method: 'POST',
+          body: JSON.stringify(radSend),
+          headers: {
+            'Content-type': 'application/json; charset=UTF-8'
+        }
+      })
+      .then(response =>{
+          console.log("worked");
+      })
     }
 
     var myloc = new L.LatLng(49.26060520000001, -123.2459938);
@@ -78,6 +96,7 @@
         fillOpacity: 0.5,
         radius: 500
     }).addTo(maptest);
+
     slider.oninput = function() {
         output.innerHTML = this.value;
         circle.setRadius(this.value); // Sets the radius of the circle to be the value of the slider
@@ -114,6 +133,7 @@ address[1] = 500;
     }
 
 maptest.on('click', MapTest);
+
 
 </script>
 </html>
