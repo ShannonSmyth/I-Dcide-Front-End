@@ -39,16 +39,16 @@ var myPlugin = {
     },
     touchEnd: function(swiper, touchEnd){
       getCode();
-      if(restaurantResponses.length === 5){
+      if(restaurantResponses.length === 4){
         postRestaurants();
       }
       else if(Right === true){
         swiper.slideNext(100,true);
-        restaurantResponses.push(1);
+        restaurantResponses.push(0);
         console.log(restaurantResponses);
         }
         else if(Right === false){
-          restaurantResponses.push(0);
+          restaurantResponses.push(1);
           console.log(restaurantResponses);
         }
         Right = false;
