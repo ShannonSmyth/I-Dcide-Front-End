@@ -8,6 +8,7 @@ function myFunction() {
 }
 
 var restaurantResponses = [];
+var counting = 0;
 /* ========
 Debugger plugin, simple demo plugin to console.log some of callbacks
 ======== */
@@ -16,7 +17,7 @@ var myPlugin = {
   params: {
     debugger: false,
   },
-  
+
   on: {
     init: function (swiper) {
       if (!swiper.params.debugger) return;
@@ -34,23 +35,30 @@ var myPlugin = {
         };
         if(direction > 0){
         console.log('Right');
-        Right = true;  
+        Right = true;
         };
     },
+
     touchEnd: function(swiper, touchEnd){
       getCode();
-      if(restaurantResponses.length === 4){
-        postRestaurants();
-      }
-      else if(Right === true){
+       if(Right === true){
         swiper.slideNext(100,true);
         restaurantResponses.push(0);
         console.log(restaurantResponses);
+        counting = counting + 1;
+        if(counting == 5){
+          postRestaurants();
+        }
         }
         else if(Right === false){
           restaurantResponses.push(1);
           console.log(restaurantResponses);
+          counting = counting + 1;
+          if(counting == 5){
+            postRestaurants();
+          }
         }
+
         Right = false;
   },
     slideChange: function (swiper) {
@@ -82,7 +90,7 @@ function DollarSigns(number){
 
   }
   }
-  
+
 // Install Plugin To Swiper
 Swiper.use(myPlugin);
 
