@@ -203,20 +203,20 @@
                     <li class="item_divider"></li>
                     <div class="menu" id="menu1">
                         <div class="item">
-                            <a onload = "myFunction()">
-                            <div> Total Yes: <span id="NumRes1"></span> </div>
+                            <a>
+                            <div> Total Yes: <span id="NumRes1Yes"></span> </div>
                             </a>
                         </div>
                         <li class="item_divider"></li>
                         <div class="item">
-                            <a href="#">
-                                No:#(Show the number of people)
+                            <a>
+                                <div> Total No: <span id="NumRes1No"></span> </div>
                             </a>
                         </div>
                         <li class="item_divider"></li>
                         <div class="item">
-                            <a href="#">
-                                <div id = "choice1"></div>
+                            <a>
+                                <div> Your Response: <span id="choice1"></span> </div>
                             </a>
                         </div>
                     </div>
@@ -230,20 +230,20 @@
                     <li class="item_divider"></li>
                     <div class="menu" id="menu2">
                         <div class="item">
-                            <a onload = "myFunction1()">
-                                <div> Total Yes: <span id="NumRes2"></span> </div>
+                            <a>
+                                <div> Total Yes: <span id="NumRes2Yes"></span> </div>
                             </a>
                         </div>
                         <li class="item_divider"></li>
                         <div class="item">
-                            <a href="#">
-                                No:#
+                            <a>
+                                <div> Total No: <span id="NumRes2No"></span> </div>
                             </a>
                         </div>
                         <li class="item_divider"></li>
                         <div class="item">
-                            <a href="#">
-                                <div id = "choice2"></div>
+                            <a>
+                                <div> Your Response: <span id="choice2"></span> </div>
                             </a>
                         </div>
                     </div>
@@ -257,20 +257,20 @@
                     <li class="item_divider"></li>
                     <div class="menu" id="menu3">
                         <div class="item">
-                            <a href="#">
-                                Yes:#
+                            <a>
+                                <div> Total Yes: <span id="NumRes3Yes"></span> </div>
                             </a>
                         </div>
                         <li class="item_divider"></li>
                         <div class="item">
-                            <a href="#">
-                                No:#
+                            <a>
+                                <div> Total No: <span id="NumRes3No"></span> </div>
                             </a>
                         </div>
                         <li class="item_divider"></li>
                         <div class="item">
-                            <a href="#">
-                                <div id = "choice3"></div>
+                            <a>
+                                <div> Your Response: <span id="choice3"></span> </div>
                             </a>
                         </div>
                     </div>
@@ -284,20 +284,20 @@
                     <li class="item_divider"></li>
                     <div class="menu" id="menu4">
                         <div class="item">
-                            <a href="#">
-                                Yes:#
+                            <a>
+                                <div> Total Yes: <span id="NumRes4Yes"></span> </div>
                             </a>
                         </div>
                         <li class="item_divider"></li>
                         <div class="item">
-                            <a href="#">
-                                No:#
+                            <a>
+                                <div> Total No: <span id="NumRes4No"></span> </div>
                             </a>
                         </div>
                         <li class="item_divider"></li>
                         <div class="item">
-                            <a href="#">
-                                <div id = "choice4"></div>
+                            <a>
+                                <div> Your Response: <span id="choice4"></span> </div>
                             </a>
                         </div>
                     </div>
@@ -405,14 +405,22 @@
                 console.log(numOfNo);
                 
                 console.log(numOfYes[1]);
-                document.getElementById("NumRes1").innerHTML = numOfYes[0];
+                document.getElementById("NumRes1Yes").innerHTML = numOfYes[0];
+                document.getElementById("NumRes2Yes").innerHTML = numOfYes[1];
+                document.getElementById("NumRes3Yes").innerHTML = numOfYes[2];
+                document.getElementById("NumRes4Yes").innerHTML = numOfYes[3];
+                //document.getElementById("NumRes5Yes").innerHTML = numOfYes[4];
 
-                function myFunction() {
+                document.getElementById("NumRes1No").innerHTML = numOfNo[0];
+                document.getElementById("NumRes2No").innerHTML = numOfNo[1];
+                document.getElementById("NumRes3No").innerHTML = numOfNo[2];
+                document.getElementById("NumRes4No").innerHTML = numOfNo[3];
+                //document.getElementById("NumRes5No").innerHTML = numOfNo[4];
+
+                /*function myFunction() {
                     document.getElementById("NumRes1").innerHTML = numOfYes[0];
-                }
-                function myFunction1() {
                     document.getElementById("NumRes2").innerHTML = numOfYes[1];
-                }
+                }*/
             })
 </script>
 </html>
