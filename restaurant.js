@@ -7,6 +7,7 @@ function myFunction() {
   }
 }
 
+var restaurantResponses = [];
 /* ========
 Debugger plugin, simple demo plugin to console.log some of callbacks
 ======== */
@@ -15,6 +16,7 @@ var myPlugin = {
   params: {
     debugger: false,
   },
+  
   on: {
     init: function (swiper) {
       if (!swiper.params.debugger) return;
@@ -32,13 +34,22 @@ var myPlugin = {
         };
         if(direction > 0){
         console.log('Right');
-        Right = true;
+        Right = true;  
         };
     },
     touchEnd: function(swiper, touchEnd){
       getCode();
-      if(Right === true){
+      if(restaurantResponses.length === 5){
+        postRestaurants();
+      }
+      else if(Right === true){
         swiper.slideNext(100,true);
+        restaurantResponses.push(1);
+        console.log(restaurantResponses);
+        }
+        else if(Right === false){
+          restaurantResponses.push(0);
+          console.log(restaurantResponses);
         }
         Right = false;
   },
