@@ -66,7 +66,7 @@ function DollarSigns(number){
    return "$$$$";
    case 5:
     return "$$$$$";
-   default:
+   case null:
      return "Price Unavailable";
 
   }
