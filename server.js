@@ -88,7 +88,7 @@ app.post('/joinGroup', function(request, response) { //join the group and get se
  sess.username = request.body.username;
  if (code) {
    connection.query('INSERT INTO `Prototype1`.`Codes` (`CodeVal`,`userName`,`loginTime`,`finished`) VALUES (?,?,NOW(),0);', [code,sess.username], function(error, results, fields) {
-   response.redirect('/');
+   response.redirect('/restaurantDecide');
    response.end();
    });
  }
@@ -211,7 +211,7 @@ app.get('/Results', function(request, response) { //display group code
 app.get('/sendResults', function(request, response) {
   var sess = request.session;
   var users = [];
-  connection.query('SELECT userName,choice1,choice2,choice3,choice4,choice5 FROM `Prototype1`.`Codes` WHERE codeVal = ?;', [1], function(error, results, fields) {
+  connection.query('SELECT userName,choice1,choice2,choice3,choice4,choice5 FROM `Prototype1`.`Codes` WHERE codeVal = ?;', [sess.code], function(error, results, fields) {
     users[0] = results;
     users[1] = sess.username;
     response.json(JSON.stringify(users));
@@ -355,10 +355,6 @@ app.post('/RadiusBackup', function(request, response) { //display group code
 
 app.get('/a', function(request, response) { //display group code
   response.sendFile(path.join(__dirname + '/enter_address.html'));
-});
-
-app.get('/b', function(request, response) { //display group code
-  response.sendFile(path.join(__dirname + '/results.html'));
 });
 
 // app.get('/a', function(request, response) { //display group code
