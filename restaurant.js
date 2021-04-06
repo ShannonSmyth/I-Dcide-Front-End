@@ -43,7 +43,7 @@ var myPlugin = {
       getCode();
        if(Right === true){
         swiper.slideNext(100,true);
-        restaurantResponses.push(0);
+        restaurantResponses.push(1);
         console.log(restaurantResponses);
         counting = counting + 1;
         if(counting == 5){
@@ -51,7 +51,7 @@ var myPlugin = {
         }
         }
         else if(Right === false){
-          restaurantResponses.push(1);
+          restaurantResponses.push(0);
           console.log(restaurantResponses);
           counting = counting + 1;
           if(counting == 5){
