@@ -29,6 +29,8 @@
                 indicator.style.transform = "rotate(0deg)";
             }
         }
+    var name ="Papa Johns"
+    
     </script>
 
     <!--Hide the scroll bar on the right-->
@@ -191,9 +193,9 @@
                 </center>
                 <br>
                 <div class="menus">
-
+                     
                     <div id="menu_title1" class="menu_title" onclick="openMenu(this)">
-                        [&nbsp;<a target=”_blank” href="http://www.google.com/search?q=" + id = "menu_title1"></a>&nbsp;]
+                        <a onclick = "getLink(name1)"  target="_blank" href = "#" id = "link">
                             <!--Click to jump to the detail page--->
                             Restaurant1
                         </a>
@@ -361,6 +363,12 @@
     </div>
 </body>
 <script>
+    name1 = "Papa Johns"
+    function getLink(name){
+        var link = "http://www.google.com/search?q=" + name;
+        console.log(link)
+        document.getElementById("link").href = link;
+     }
         //global variables I will add to the script
         var choicesNum = [];
         var choicesLetter = [];
@@ -377,7 +385,7 @@
                 var my_name = "P"; //NOTE:I will need to change this part to the sess.username once we fully integrate like line above
                 var index = 0; //setting index to identify user
 
-                //finding which user we are looking up and adding theri results to the choicesNum Array
+                //finding which user we are looking up and adding their results to the choicesNum Array
                 // NOTE:figure out how to fix length
                 for(var i = 0; i< size; i++){
                         if(testingUser[i].userName == my_name){
