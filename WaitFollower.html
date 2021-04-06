@@ -9,6 +9,23 @@
     <h1 class = "title">... Please wait for other users ... </h1>
 </body>
 <script>
+  var update = setInterval(updateStatus,1000); //create a timer for 1 seconds
+
+  function updateStatus(){
+    fetch("http://localhost:8080/followerDoneCheck")
+    .then(response => response.json())
+    .then(json => {
+      json = JSON.parse(json);
+      // console.log(json)
+      // console.log(json[0].groupDone)
+      var isDone = json[0].groupDone
+			if (isDone == 1) {
+        window.location = "http://localhost:8080/";
+			}
+    })
+  }
+  updateStatus()
+
 </script>
 </head>
 </html>

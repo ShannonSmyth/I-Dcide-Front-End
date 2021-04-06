@@ -159,8 +159,14 @@ function postRestaurants(){
           'Content-type': 'application/json; charset=UTF-8'
       }
   })
-  .then(response => {
-    window.location = "http://localhost:8080/";
+  .then(response => response.json())
+  .then(json => {
+    if(json == 1){
+      window.location = "http://localhost:8080/WaitLeader";
+    }
+    else {
+      window.location = "http://localhost:8080/WaitFollower";
+    }
   });
 }
 function getCode(){

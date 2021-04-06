@@ -84,8 +84,9 @@ app.get('/joinGroup', function(request, response) { //home page
 app.post('/joinGroup', function(request, response) { //join the group and get sent to restaurant decider page
  var sess = request.session;
  var code = request.body.code;
- sess.code = code;
+ sess.code = parseInt(code);
  sess.username = request.body.username;
+ sess.leader = 0;
  if (code) {
    connection.query('INSERT INTO `Prototype1`.`Codes` (`CodeVal`,`userName`,`loginTime`,`finished`) VALUES (?,?,NOW(),0);', [code,sess.username], function(error, results, fields) {
    response.redirect('/restaurantDecide');
@@ -113,6 +114,7 @@ app.post('/createGroup', function(request, response) { // host puts info in, get
   var code = ""+num1+num2+num3;
   code = parseInt(code);
   sess.code = code;
+  sess.leader = 1;
 
   //get restaurant choices for the group
   //Adding google API function here
@@ -123,7 +125,7 @@ app.post('/createGroup', function(request, response) { // host puts info in, get
 
   async function updating() {
     var values = await restaurant(sess.lat, sess.lng, radius, keyword, code, sess.username);
-    connection.query('INSERT INTO `Prototype1`.`Codes` (`CodeVal`,`leader`,`userName`,`distance`,`loginTime`,`finished`,`rest1`,`rest2`,`rest3`,`rest4`,`rest5`) VALUES (?,1,?,?,NOW(),0,?,?,?,?,?);', [code,sess.username,radius,values[0].place_id,values[1].place_id,values[2].place_id,values[3].place_id,values[4].place_id], function(error, results, fields) {
+    connection.query('INSERT INTO `Prototype1`.`Codes` (`CodeVal`,`leader`,`userName`,`distance`,`loginTime`,`finished`,`rest1`,`rest2`,`rest3`,`rest4`,`rest5`,`groupDone`) VALUES (?,1,?,?,NOW(),0,?,?,?,?,?,0);', [code,sess.username,radius,values[0].place_id,values[1].place_id,values[2].place_id,values[3].place_id,values[4].place_id], function(error, results, fields) {
       //restaurant(sess.lat, sess.lng, radius, keyword, code, sess.username); //This is where the API will fill in globalRestaurants object
       response.redirect('/restaurantDecide');
     });
@@ -184,13 +186,32 @@ app.post('/responseToDB', function(request, response) { //post all the results t
   //console.log(sess.username);
   connection.query('UPDATE `Prototype1`.`Codes` SET choice1 = ?, choice2 = ?, choice3 = ?, choice4 = ?,choice5 = ?,finished = 1 WHERE CodeVal = ? AND userName = ?;', [restaurantResponses[0],restaurantResponses[1],restaurantResponses[2],restaurantResponses[3],restaurantResponses[4], sess.code, sess.username], function(error, results, fields) {
   });
-  response.end();
+  response.json(JSON.stringify(sess.leader));
 });
 
 
-app.get('/waitingPage', function(request, response) { //display group code
-  response.sendFile(path.join(__dirname + '/waitingPage.html'));
-  app.use(express.static('Waiting Page Files'));
+app.get('/WaitLeader', function(request, response) { //display group code
+  response.sendFile(path.join(__dirname + '/WaitLeader.html'));
+  //app.use(express.static('Waiting Page Files'));
+});
+
+app.get('/WaitFollower', function(request, response) { //display group code
+  response.sendFile(path.join(__dirname + '/WaitFollower.html'));
+  //app.use(express.static('Waiting Page Files'));
+});
+
+app.post('/finishVoting', function(request, response) { //post all the results to the server and database then redirect to waiting page
+  var sess = request.session
+  connection.query('UPDATE `Prototype1`.`Codes` SET groupDone = 1 WHERE CodeVal = ? AND userName = ?;', [sess.code, sess.username], function(error, results, fields) {
+  });
+  response.end();
+});
+
+app.get('/followerDoneCheck', function(request, response) { //get username of clients, and check if finished going through options
+  var sess = request.session;
+  connection.query('SELECT groupDone FROM `Prototype1`.`Codes` WHERE codeVal = ? AND leader = 1;', [sess.code], function(error, results, fields) {
+    response.json(JSON.stringify(results));
+  });
 });
 
 app.get('/username', function(request, response) { //get username of clients, and check if finished going through options
@@ -211,7 +232,7 @@ app.get('/Results', function(request, response) { //display group code
 app.get('/sendResults', function(request, response) {
   var sess = request.session;
   var users = [];
-  connection.query('SELECT userName,choice1,choice2,choice3,choice4,choice5 FROM `Prototype1`.`Codes` WHERE codeVal = ?;', [1], function(error, results, fields) {
+  connection.query('SELECT userName,choice1,choice2,choice3,choice4,choice5 FROM `Prototype1`.`Codes` WHERE codeVal = ?;', [sess.code], function(error, results, fields) {
     users[0] = results;
     users[1] = sess.username;
     response.json(JSON.stringify(users));
@@ -366,9 +387,5 @@ app.get('/a', function(request, response) { //display group code
 //   getCoordinates(address);
 //   response.sendFile(path.join(__dirname + '/index.html'));
 // });
-
-app.get('/b', function(request, response) { //display group code
-  response.sendFile(path.join(__dirname + '/results.html'));
-});
 
 app.listen(8080);
