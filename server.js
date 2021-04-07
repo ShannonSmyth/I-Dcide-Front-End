@@ -159,7 +159,7 @@ app.get('/restaurantDecide', function(request, response){ //restaurant decision 
 
 app.get('/restaurantChoices', function(request, response){ //send restaurant choices to client
   var sess = request.session;
-  connection.query('SELECT rest1,rest2,rest3,rest4,rest5 FROM `Prototype1`.`Codes` WHERE codeVal = ? AND leader = 1;', [15], function(error, results, fields) {
+  connection.query('SELECT rest1,rest2,rest3,rest4,rest5 FROM `Prototype1`.`Codes` WHERE codeVal = ? AND leader = 1;', [sess.code], function(error, results, fields) {
     async function names(values){
       var names = [];
       names[0] = await gettingInfo(values[0].rest1)
