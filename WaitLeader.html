@@ -28,7 +28,7 @@
     .then(json => {
       //console.log(json)
       if(json == 0){
-        window.location = "http://localhost:8080/";
+        window.location = "http://localhost:8080/Results";
       }
       else if(json == 1){
         window.location = "http://localhost:8080/restaurantDecide";
@@ -47,7 +47,7 @@
         }
     })
     .then(response => {
-      window.location = "http://localhost:8080/";
+      window.location = "http://localhost:8080/Results";
     });
   }
 </script>
