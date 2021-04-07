@@ -197,7 +197,7 @@
                     <div id="menu_title1" class="menu_title" onclick="openMenu(this)">
                         <a onclick = "getLink(name1)"  target="_blank" href = "#" id = "link">
                             <!--Click to jump to the detail page--->
-                            Restaurant1
+                            <span id="NameRes1"></span> 
                         </a>
                         <div class="indicator" id="indicator1">^</div>
                     </div>
@@ -226,7 +226,7 @@
                     <li class="menu_divider"></li>
 
                     <div id="menu_title2" class="menu_title" onclick="openMenu(this)">
-                        Restaurant2
+                        <span id="NameRes2"></span>
                         <div class="indicator" id="indicator2">^</div>
                     </div>
                     <li class="item_divider"></li>
@@ -253,7 +253,7 @@
                     <li class="menu_divider"></li>
 
                     <div id="menu_title3" class="menu_title" onclick="openMenu(this)">
-                        Restaurant3
+                        <span id="NameRes3"></span>
                         <div class="indicator" id="indicator3">^</div>
                     </div>
                     <li class="item_divider"></li>
@@ -280,7 +280,7 @@
                     <li class="menu_divider"></li>
 
                     <div id="menu_title4" class="menu_title" onclick="openMenu(this)">
-                        Restaurant4
+                        <span id="NameRes4"></span> 
                         <div class="indicator" id="indicator4">^</div>
                     </div>
                     <li class="item_divider"></li>
@@ -307,7 +307,7 @@
                 <li class="menu_divider"></li>
 
                 <div id="menu_title5" class="menu_title" onclick="openMenu(this)">
-                    Restaurant5
+                    <span id="NameRes5"></span>
                     <div class="indicator" id="indicator5">^</div>
                 </div>
                 <li class="item_divider"></li>
@@ -472,11 +472,11 @@
 
                     console.log(names);
 
-                    // document.getElementById("NameRes1").innerHTML = names[0];
-                    // document.getElementById("NameRes2").innerHTML = names[1];
-                    // document.getElementById("NameRes3").innerHTML = names[2];
-                    // document.getElementById("NameRes4").innerHTML = names[3];
-                    // document.getElementById("NameRes5").innerHTML = names[4];
+                    document.getElementById("NameRes1").innerHTML = names[0];
+                    document.getElementById("NameRes2").innerHTML = names[1];
+                    document.getElementById("NameRes3").innerHTML = names[2];
+                    document.getElementById("NameRes4").innerHTML = names[3];
+                    document.getElementById("NameRes5").innerHTML = names[4];
 
              })
 
