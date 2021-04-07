@@ -382,7 +382,7 @@
                 var size = Object.keys(testingUser).length;//Size of our objects = how many users
                 
                 //var my_name = users[1]; //client name is in array postion 1
-                var my_name = "P"; //NOTE:I will need to change this part to the sess.username once we fully integrate like line above
+                var my_name = "Sebas"; //NOTE:I will need to change this part to the sess.username once we fully integrate like line above
                 var index = 0; //setting index to identify user
 
                 //finding which user we are looking up and adding their results to the choicesNum Array
@@ -456,5 +456,13 @@
                     document.getElementById("NumRes2").innerHTML = numOfYes[1];
                 }*/
             })
+
+            fetch("http://localhost:8080/restaurantChoices")
+                    .then(response => response.json()) //returns JSON of response
+                     .then(json => { //JSON is still a string
+            //     var names = JSON.parse(json); 
+            //     console.log(names)
+             })
+
 </script>
 </html>

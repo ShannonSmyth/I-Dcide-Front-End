@@ -157,7 +157,7 @@ app.get('/restaurantDecide', function(request, response){ //restaurant decision 
 
 app.get('/restaurantChoices', function(request, response){ //send restaurant choices to client
   var sess = request.session;
-  connection.query('SELECT rest1,rest2,rest3,rest4,rest5 FROM `Prototype1`.`Codes` WHERE codeVal = ? AND leader = 1;', [sess.code], function(error, results, fields) {
+  connection.query('SELECT rest1,rest2,rest3,rest4,rest5 FROM `Prototype1`.`Codes` WHERE codeVal = ? AND leader = 1;', [15], function(error, results, fields) {
     async function names(values){
       var names = [];
       names[0] = await gettingInfo(values[0].rest1)
@@ -171,9 +171,9 @@ app.get('/restaurantChoices', function(request, response){ //send restaurant cho
       // names[3] = await gettingInfo("ChIJud95Kud0hlQRIdd23A7LyZQ")
       // names[4] = await gettingInfo("ChIJcZ0Yt8x0hlQR4MGXF9c5cL8")
       response.json(JSON.stringify(names));
-      //console.log(names)
+      console.log(names)
     }
-    console.log(results)
+    //console.log(results)
     names(results)
     //response.end()
   });
@@ -232,7 +232,7 @@ app.get('/Results', function(request, response) { //display group code
 app.get('/sendResults', function(request, response) {
   var sess = request.session;
   var users = [];
-  connection.query('SELECT userName,choice1,choice2,choice3,choice4,choice5 FROM `Prototype1`.`Codes` WHERE codeVal = ?;', [sess.code], function(error, results, fields) {
+  connection.query('SELECT userName,choice1,choice2,choice3,choice4,choice5 FROM `Prototype1`.`Codes` WHERE codeVal = ?;', [15], function(error, results, fields) {
     users[0] = results;
     users[1] = sess.username;
     response.json(JSON.stringify(users));
@@ -387,5 +387,9 @@ app.get('/a', function(request, response) { //display group code
 //   getCoordinates(address);
 //   response.sendFile(path.join(__dirname + '/index.html'));
 // });
+
+app.get('/b', function(request, response) { //display group code
+  response.sendFile(path.join(__dirname + '/results.html'));
+});
 
 app.listen(8080);
