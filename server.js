@@ -234,7 +234,7 @@ app.get('/Results', function(request, response) { //display group code
 app.get('/sendResults', function(request, response) {
   var sess = request.session;
   var users = [];
-  connection.query('SELECT userName,choice1,choice2,choice3,choice4,choice5 FROM `Prototype1`.`Codes` WHERE codeVal = ?;', [15], function(error, results, fields) {
+  connection.query('SELECT userName,choice1,choice2,choice3,choice4,choice5 FROM `Prototype1`.`Codes` WHERE codeVal = ?;', [sess.code], function(error, results, fields) {
     users[0] = results;
     users[1] = sess.username;
     response.json(JSON.stringify(users));
