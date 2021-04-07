@@ -7,6 +7,8 @@ function myFunction() {
   }
 }
 
+var restaurantResponses = [];
+var counting = 0;
 /* ========
 Debugger plugin, simple demo plugin to console.log some of callbacks
 ======== */
@@ -15,6 +17,7 @@ var myPlugin = {
   params: {
     debugger: false,
   },
+
   on: {
     init: function (swiper) {
       if (!swiper.params.debugger) return;
@@ -35,11 +38,27 @@ var myPlugin = {
         Right = true;
         };
     },
+
     touchEnd: function(swiper, touchEnd){
       getCode();
-      if(Right === true){
+       if(Right === true){
         swiper.slideNext(100,true);
+        restaurantResponses.push(1);
+        console.log(restaurantResponses);
+        counting = counting + 1;
+        if(counting == 5){
+          postRestaurants();
         }
+        }
+        else if(Right === false){
+          restaurantResponses.push(0);
+          console.log(restaurantResponses);
+          counting = counting + 1;
+          if(counting == 5){
+            postRestaurants();
+          }
+        }
+
         Right = false;
   },
     slideChange: function (swiper) {
@@ -66,12 +85,12 @@ function DollarSigns(number){
    return "$$$$";
    case 5:
     return "$$$$$";
-   default:
+   case null:
      return "Price Unavailable";
 
   }
   }
-  
+
 // Install Plugin To Swiper
 Swiper.use(myPlugin);
 
@@ -140,8 +159,14 @@ function postRestaurants(){
           'Content-type': 'application/json; charset=UTF-8'
       }
   })
-  .then(response => {
-    window.location = "http://localhost:8080/";
+  .then(response => response.json())
+  .then(json => {
+    if(json == 1){
+      window.location = "http://localhost:8080/WaitLeader";
+    }
+    else {
+      window.location = "http://localhost:8080/WaitFollower";
+    }
   });
 }
 function getCode(){
