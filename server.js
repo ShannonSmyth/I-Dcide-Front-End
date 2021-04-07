@@ -173,9 +173,9 @@ app.get('/restaurantChoices', function(request, response){ //send restaurant cho
       // names[3] = await gettingInfo("ChIJud95Kud0hlQRIdd23A7LyZQ")
       // names[4] = await gettingInfo("ChIJcZ0Yt8x0hlQR4MGXF9c5cL8")
       response.json(JSON.stringify(names));
-      console.log(names)
+      //console.log(names)
     }
-    //console.log(results)
+    console.log(results)
     names(results)
     //response.end()
   });
@@ -227,8 +227,7 @@ app.get('/username', function(request, response) { //get username of clients, an
 });
 
 app.get('/Results', function(request, response) { //display group code
-  response.sendFile(path.join(__dirname + '/Results.html'));
-  app.use(express.static('Results Page Files'));
+  response.sendFile(path.join(__dirname + '/results.html'));
 });
 
 app.get('/sendResults', function(request, response) {
@@ -411,9 +410,5 @@ app.get('/a', function(request, response) { //display group code
 //   getCoordinates(address);
 //   response.sendFile(path.join(__dirname + '/index.html'));
 // });
-
-app.get('/b', function(request, response) { //display group code
-  response.sendFile(path.join(__dirname + '/results.html'));
-});
 
 app.listen(8080);
