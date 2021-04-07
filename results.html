@@ -460,8 +460,24 @@
             fetch("http://localhost:8080/restaurantChoices")
                     .then(response => response.json()) //returns JSON of response
                      .then(json => { //JSON is still a string
-            //     var names = JSON.parse(json); 
-            //     console.log(names)
+                    var locationInfo = JSON.parse(json); 
+                    console.log(locationInfo)
+
+                    var names = [];
+                    names[0] = locationInfo[0][0];
+                    names[1] = locationInfo[1][0];
+                    names[2] = locationInfo[2][0];
+                    names[3] = locationInfo[3][0];
+                    names[4] = locationInfo[4][0];
+
+                    console.log(names);
+
+                    // document.getElementById("NameRes1").innerHTML = names[0];
+                    // document.getElementById("NameRes2").innerHTML = names[1];
+                    // document.getElementById("NameRes3").innerHTML = names[2];
+                    // document.getElementById("NameRes4").innerHTML = names[3];
+                    // document.getElementById("NameRes5").innerHTML = names[4];
+
              })
 
 </script>
