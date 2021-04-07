@@ -122,9 +122,11 @@ app.post('/createGroup', function(request, response) { // host puts info in, get
 
   //calling fucntion to print details
   //gettingInfo(placeID);
-
   async function updating() {
-    var values = await restaurant(sess.lat, sess.lng, radius, keyword, code, sess.username);
+    var valuesRaw = await restaurant(sess.lat, sess.lng, radius, keyword, code, sess.username);
+    var values = valuesRaw[0];
+    sess.numberOfRestaurants = valuesRaw[1];
+    sess.restaurantIndex = 4;
     connection.query('INSERT INTO `Prototype1`.`Codes` (`CodeVal`,`leader`,`userName`,`distance`,`loginTime`,`finished`,`rest1`,`rest2`,`rest3`,`rest4`,`rest5`,`groupDone`) VALUES (?,1,?,?,NOW(),0,?,?,?,?,?,0);', [code,sess.username,radius,values[0].place_id,values[1].place_id,values[2].place_id,values[3].place_id,values[4].place_id], function(error, results, fields) {
       //restaurant(sess.lat, sess.lng, radius, keyword, code, sess.username); //This is where the API will fill in globalRestaurants object
       response.redirect('/restaurantDecide');
@@ -240,11 +242,25 @@ app.get('/sendResults', function(request, response) {
 });
 
 app.post('/newRound', function(request, response) { //join the group and get sent to restaurant decider page
- var sess = request.session;
- connection.query('UPDATE `Prototype1`.`Codes` SET finished = 0 WHERE codeVal = ? AND userName = ?;', [sess.code, sess.username], function(error, results, fields) {
- response.redirect('/restaurantDecide');
- response.end();
- });
+ async function newNames() {
+   var sess = request.session;
+   var valuesRaw = await restaurant(sess.lat, sess.lng, sess.radius, keyword, sess.code, sess.username);
+   var values = valuesRaw[0];
+   var tempRest = sess.restaurantIndex
+   sess.restaurantIndex = sess.restaurantIndex + 5;
+   console.log(sess.restaurantIndex+" "+sess.numberOfRestaurants)
+   if(sess.restaurantIndex >= sess.numberOfRestaurants){
+     response.json(JSON.stringify(0));
+   }
+   else {
+    connection.query('UPDATE `Prototype1`.`Codes` SET groupDone = 0, rest1 = ?, rest2 = ?, rest3 = ?, rest4 = ?, rest5 = ? WHERE CodeVal = ? AND userName = ?;', [values[tempRest+1].place_id,values[tempRest+2].place_id,values[tempRest+3].place_id,values[tempRest+4].place_id,values[tempRest+5].place_id,sess.code,sess.username], function(error, results, fields) {
+     //restaurant(sess.lat, sess.lng, radius, keyword, code, sess.username); //This is where the API will fill in globalRestaurants object
+     response.json(JSON.stringify(1));
+     //console.log(numberOfRestaurants)
+    });
+  }
+ }
+ newNames();
 });
 
 app.post('/logout', function(request, response) {
@@ -268,10 +284,14 @@ function restaurant(latitude, longitude, radius, keyword, code, username){
   .then(response => response.json())
   .then(json => json.results)
   .then(results =>{
-    return results
+    //console.log(results)
+    //console.log(Object.keys(results).length)
+    var returnVal = [];
+    returnVal[0] = results;
+    returnVal[1] = Object.keys(results).length;
+    return returnVal
     //result = results[1].name;
     //console.log(results[1].place_id);
-    //console.log(results)
     //console.log(results)
     // connection.query('UPDATE `Prototype1`.`Codes` SET rest1 = ?, rest2 = ?, rest3 = ?, rest4 = ?, rest5 = ? WHERE codeVal = ? AND userName = ?;', [results[1].place_id, results[2].place_id, results[3].place_id, results[4].place_id, results[5].place_id, code, username], function(error, results, fields) {
     // });
@@ -307,9 +327,13 @@ function gettingInfo(placeID){
       info[2] = result.vicinity;
       //info[3] = result.photos;
       var valIMG = result.photos;
-      var parameter = valIMG[1].photo_reference; //getting the photo reference values
-      var width = 2000;
-      info[3] = 'https://maps.googleapis.com/maps/api/place/photo?maxwidth='+width+'&photoreference='+parameter+'&key='+key
+      try {
+        var parameter = valIMG[1].photo_reference; //getting the photo reference values
+        var width = 2000;
+        info[3] = 'https://maps.googleapis.com/maps/api/place/photo?maxwidth='+width+'&photoreference='+parameter+'&key='+key
+      } catch(e) {
+        info[3] = 'https://i.imgur.com/oaxDtK0h.jpg'
+      }
       info[4] = result.price_level;
 
       return info
