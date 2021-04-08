@@ -205,7 +205,7 @@ input{
  #maptest{
         height: 250px;
         width: 300px;
-     left: 10%;
+        margin: 0 auto;
     }
 
 .tiny{
