@@ -30,7 +30,7 @@
             }
         }
     var name ="Papa Johns"
-    
+
     </script>
 
     <!--Hide the scroll bar on the right-->
@@ -193,11 +193,11 @@
                 </center>
                 <br>
                 <div class="menus">
-                     
+
                     <div id="menu_title1" class="menu_title" onclick="openMenu(this)">
-                        <a onclick = "getLink(name1)"  target="_blank" href = "#" id = "link">
+                        <a onclick= "getLink(names)" target="_blank" href = "#" id = "link1">
                             <!--Click to jump to the detail page--->
-                            <span id="NameRes1"></span> 
+                            <span id="NameRes1"></span>
                         </a>
                         <div class="indicator" id="indicator1">^</div>
                     </div>
@@ -226,7 +226,10 @@
                     <li class="menu_divider"></li>
 
                     <div id="menu_title2" class="menu_title" onclick="openMenu(this)">
-                        <span id="NameRes2"></span>
+                      <a onclick= "getLink(names)" target="_blank" href = "#" id = "link2">
+                          <!--Click to jump to the detail page--->
+                          <span id="NameRes2"></span>
+                      </a>
                         <div class="indicator" id="indicator2">^</div>
                     </div>
                     <li class="item_divider"></li>
@@ -253,7 +256,10 @@
                     <li class="menu_divider"></li>
 
                     <div id="menu_title3" class="menu_title" onclick="openMenu(this)">
-                        <span id="NameRes3"></span>
+                      <a onclick= "getLink(names)" target="_blank" href = "#" id = "link3">
+                          <!--Click to jump to the detail page--->
+                          <span id="NameRes3"></span>
+                      </a>
                         <div class="indicator" id="indicator3">^</div>
                     </div>
                     <li class="item_divider"></li>
@@ -280,7 +286,10 @@
                     <li class="menu_divider"></li>
 
                     <div id="menu_title4" class="menu_title" onclick="openMenu(this)">
-                        <span id="NameRes4"></span> 
+                      <a onclick= "getLink(names)" target="_blank" href = "#" id = "link4">
+                          <!--Click to jump to the detail page--->
+                          <span id="NameRes4"></span>
+                      </a>
                         <div class="indicator" id="indicator4">^</div>
                     </div>
                     <li class="item_divider"></li>
@@ -307,7 +316,10 @@
                 <li class="menu_divider"></li>
 
                 <div id="menu_title5" class="menu_title" onclick="openMenu(this)">
-                    <span id="NameRes5"></span>
+                  <a onclick= "getLink(names)" target="_blank" href = "#" id = "link5">
+                      <!--Click to jump to the detail page--->
+                      <span id="NameRes5"></span>
+                  </a>
                     <div class="indicator" id="indicator5">^</div>
                 </div>
                 <li class="item_divider"></li>
@@ -363,11 +375,20 @@
     </div>
 </body>
 <script>
+    var names = [];
     name1 = "Papa Johns"
     function getLink(name){
-        var link = "http://www.google.com/search?q=" + name;
-        console.log(link)
-        document.getElementById("link").href = link;
+        var link1 = "http://www.google.com/search?q=" + name[0];
+        var link2 = "http://www.google.com/search?q=" + name[1];
+        var link3 = "http://www.google.com/search?q=" + name[2];
+        var link4 = "http://www.google.com/search?q=" + name[3];
+        var link5 = "http://www.google.com/search?q=" + name[4];
+        //console.log(link)
+        document.getElementById("link1").href = link1;
+        document.getElementById("link2").href = link2;
+        document.getElementById("link3").href = link3;
+        document.getElementById("link4").href = link4;
+        document.getElementById("link5").href = link5;
      }
         //global variables I will add to the script
         var choicesNum = [];
@@ -380,7 +401,7 @@
                 var users = JSON.parse(json); //turn string into object to access parts
                 var testingUser = users[0];
                 var size = Object.keys(testingUser).length;//Size of our objects = how many users
-                
+
                 var my_name = users[1]; //client name is in array postion 1
                 //var my_name = "Sebas"; //NOTE:I will need to change this part to the sess.username once we fully integrate like line above
                 var index = 0; //setting index to identify user
@@ -399,7 +420,7 @@
                             break;
                         }
                 }
-                
+
                 //loop to turn 1 and 0 to yes and no
                 for(i = 0; i < choicesNum.length; i++){
                     if(choicesNum[i] == 0){
@@ -421,7 +442,7 @@
                 //Tally all of the entries
                 var numOfYes = [0, 0, 0 , 0, 0]; //array for number of yes. Element 0 is choice 1 ... element 4 is choice 5
                 var numOfNo = [];  //array for number of no. Element 0 is choice 1
-                
+
                 //add up the result of each user
                 for(i = 0; i < size; i++){
                     numOfYes[0] += testingUser[i].choice1;
@@ -460,10 +481,10 @@
             fetch("http://localhost:8080/restaurantChoices")
                     .then(response => response.json()) //returns JSON of response
                      .then(json => { //JSON is still a string
-                    var locationInfo = JSON.parse(json); 
+                    var locationInfo = JSON.parse(json);
                     console.log(locationInfo)
 
-                    var names = [];
+
                     names[0] = locationInfo[0][0];
                     names[1] = locationInfo[1][0];
                     names[2] = locationInfo[2][0];
