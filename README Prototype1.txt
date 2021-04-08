@@ -6,6 +6,8 @@ CREATE TABLE Codes (
     CodeVal int,
     userName VARCHAR(50),
     leader int,
+    groupDone int,
+    newRound int,
     finished int,
     loginTime DATETIME,
     category VARCHAR(50),
@@ -22,11 +24,16 @@ CREATE TABLE Codes (
     rest5 VARCHAR(50)
 );
 
+to manage the db and delete old entries, use the following code 
 
 CREATE EVENT check_db ON SCHEDULE EVERY 10 MINUTE ENABLE 
   DO 
   DELETE FROM Codes WHERE `loginTime` < CURRENT_TIMESTAMP - INTERVAL 30 MINUTE;
 
+
+To stop doing that use the following
+
+DROP EVENT check_db;
 
 2.
 
@@ -60,7 +67,7 @@ npm install connect-redis
 npm install node-fetch
 
 
-
+5. run it with node server.js
 
 Hope it works!
 
