@@ -127,7 +127,7 @@ app.post('/createGroup', function(request, response) { // host puts info in, get
     var values = valuesRaw[0];
     sess.numberOfRestaurants = valuesRaw[1];
     sess.restaurantIndex = 4;
-    connection.query('INSERT INTO `Prototype1`.`Codes` (`CodeVal`,`leader`,`userName`,`distance`,`loginTime`,`finished`,`rest1`,`rest2`,`rest3`,`rest4`,`rest5`,`groupDone`) VALUES (?,1,?,?,NOW(),0,?,?,?,?,?,0);', [code,sess.username,radius,values[0].place_id,values[1].place_id,values[2].place_id,values[3].place_id,values[4].place_id], function(error, results, fields) {
+    connection.query('INSERT INTO `Prototype1`.`Codes` (`CodeVal`,`leader`,`userName`,`distance`,`loginTime`,`finished`,`rest1`,`rest2`,`rest3`,`rest4`,`rest5`,`groupDone`,`newRound`) VALUES (?,1,?,?,NOW(),0,?,?,?,?,?,0,0);', [code,sess.username,radius,values[0].place_id,values[1].place_id,values[2].place_id,values[3].place_id,values[4].place_id], function(error, results, fields) {
       //restaurant(sess.lat, sess.lng, radius, keyword, code, sess.username); //This is where the API will fill in globalRestaurants object
       response.redirect('/restaurantDecide');
     });
@@ -186,7 +186,7 @@ app.post('/responseToDB', function(request, response) { //post all the results t
   var restaurantResponses = request.body;
   var sess = request.session;
   //console.log(sess.username);
-  connection.query('UPDATE `Prototype1`.`Codes` SET choice1 = ?, choice2 = ?, choice3 = ?, choice4 = ?,choice5 = ?,finished = 1 WHERE CodeVal = ? AND userName = ?;', [restaurantResponses[0],restaurantResponses[1],restaurantResponses[2],restaurantResponses[3],restaurantResponses[4], sess.code, sess.username], function(error, results, fields) {
+  connection.query('UPDATE `Prototype1`.`Codes` SET choice1 = ?, choice2 = ?, choice3 = ?, choice4 = ?,choice5 = ?, newRound = 0 WHERE CodeVal = ? AND userName = ?;', [restaurantResponses[0],restaurantResponses[1],restaurantResponses[2],restaurantResponses[3],restaurantResponses[4], sess.code, sess.username], function(error, results, fields) {
   });
   response.json(JSON.stringify(sess.leader));
 });
@@ -216,6 +216,27 @@ app.get('/followerDoneCheck', function(request, response) { //get username of cl
   });
 });
 
+app.get('/finishedCheck', function(request, response) { //get username of clients, and check if finished going through options
+  var sess = request.session;
+  connection.query('SELECT finished FROM `Prototype1`.`Codes` WHERE codeVal = ? AND leader = 1;', [sess.code], function(error, results, fields) {
+    response.json(JSON.stringify(results));
+  });
+});
+
+app.post('/finished', function(request, response) { //post all the results to the server and database then redirect to waiting page
+  var sess = request.session
+  connection.query('UPDATE `Prototype1`.`Codes` SET finished = 1 WHERE CodeVal = ? AND userName = ?;', [sess.code, sess.username], function(error, results, fields) {
+  });
+  response.end();
+});
+
+app.get('/anotherRoundCheck', function(request, response) { //get username of clients, and check if finished going through options
+  var sess = request.session;
+  connection.query('SELECT newRound FROM `Prototype1`.`Codes` WHERE codeVal = ? AND leader = 1;', [sess.code], function(error, results, fields) {
+    response.json(JSON.stringify(results));
+  });
+});
+
 app.get('/username', function(request, response) { //get username of clients, and check if finished going through options
   var sess = request.session;
   var users = [];
@@ -226,8 +247,14 @@ app.get('/username', function(request, response) { //get username of clients, an
   });
 });
 
-app.get('/Results', function(request, response) { //display group code
-  response.sendFile(path.join(__dirname + '/results.html'));
+app.get('/ResultsLeader', function(request, response) { //display group code
+  response.sendFile(path.join(__dirname + '/resultsLeader.html'));
+  app.use(express.static('css'));
+});
+
+app.get('/ResultsFollower', function(request, response) { //display group code
+  response.sendFile(path.join(__dirname + '/resultsFollower.html'));
+  app.use(express.static('css'));
 });
 
 app.get('/sendResults', function(request, response) {
@@ -252,7 +279,7 @@ app.post('/newRound', function(request, response) { //join the group and get sen
      response.json(JSON.stringify(0));
    }
    else {
-    connection.query('UPDATE `Prototype1`.`Codes` SET groupDone = 0, rest1 = ?, rest2 = ?, rest3 = ?, rest4 = ?, rest5 = ? WHERE CodeVal = ? AND userName = ?;', [values[tempRest+1].place_id,values[tempRest+2].place_id,values[tempRest+3].place_id,values[tempRest+4].place_id,values[tempRest+5].place_id,sess.code,sess.username], function(error, results, fields) {
+    connection.query('UPDATE `Prototype1`.`Codes` SET groupDone = 0, newRound = 1, rest1 = ?, rest2 = ?, rest3 = ?, rest4 = ?, rest5 = ? WHERE CodeVal = ? AND userName = ?;', [values[tempRest+1].place_id,values[tempRest+2].place_id,values[tempRest+3].place_id,values[tempRest+4].place_id,values[tempRest+5].place_id,sess.code,sess.username], function(error, results, fields) {
      //restaurant(sess.lat, sess.lng, radius, keyword, code, sess.username); //This is where the API will fill in globalRestaurants object
      response.json(JSON.stringify(1));
      //console.log(numberOfRestaurants)

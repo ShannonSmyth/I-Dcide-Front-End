@@ -10,7 +10,6 @@
     <div class="container">
             <button class="movingon" onclick= "finish()"><span>Everybody's done!</span></button>
     </div>
-    <button onclick= "newOptions()">Another round</button>
 </body>
 <script>
 
@@ -28,7 +27,7 @@
     .then(json => {
       //console.log(json)
       if(json == 0){
-        window.location = "http://localhost:8080/Results";
+        window.location = "http://localhost:8080/ResultsLeader";
       }
       else if(json == 1){
         window.location = "http://localhost:8080/restaurantDecide";
@@ -47,7 +46,7 @@
         }
     })
     .then(response => {
-      window.location = "http://localhost:8080/Results";
+      window.location = "http://localhost:8080/ResultsLeader";
     });
   }
 </script>
