@@ -8,12 +8,13 @@
 <body class = "fullscreen">
     <div class="container">
         <form id="NewUser" action="joinGroup" method="POST">
-            <p><label>Enter Group Code: <input name="code"/></label></p>
-            <p><label>Enter your name: <input name="username" /></label></p>
+            <p><label><input name="code" value="Group Code"/></label></p>
+            <p><label><input name="username" value="Your Name" /></label></p>
         </form>
         <button class="movingon" onclick= "start()"><span>START</span></button>
         <button class="homepage" onclick= "back()"><span>Back to beginning</span></button>
     </div>
+    
 </body>
 <script>
   function back() {
@@ -23,6 +24,7 @@
     var myForm = document.getElementById("NewUser");
     myForm.submit(); //submit the form contents
   }
+    
 </script>
 </head>
 </html>
