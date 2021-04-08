@@ -125,7 +125,7 @@
             width: 93%;
             height: 40px;
             line-height: 40px;
-            background: slategrey;
+            background: rgb(64, 167, 86);
             color: white;
             padding-left: 30px;
             transition: all 0.3s ease;
@@ -172,6 +172,11 @@
             border-radius: 5px;
             position: relative;
         }
+        a:link {
+  color: white;
+  background-color: transparent;
+  text-decoration: none;
+}
     </style>
 
 </head>
@@ -198,6 +203,7 @@
                     <div id="menu_title1" class="menu_title" onclick="openMenu(this)">
                         <a onclick= "getLink(names)" target="_blank" href = "#" id = "link1">
                             <!--Click to jump to the detail page--->
+                            
                             <span id="NameRes1"></span>
                         </a>
                         <div class="indicator" id="indicator1">^</div>
