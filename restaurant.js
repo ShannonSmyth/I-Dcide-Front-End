@@ -1,3 +1,8 @@
+/*
+File is the JavaScript code to add the restaraunts to the swiping page
+*/ 
+
+//Adds a top navigation bar for styling
 function myFunction() {
   var x = document.getElementById("myTopnav");
   if (x.className === "topnav") {
@@ -10,7 +15,7 @@ function myFunction() {
 var restaurantResponses = [];
 var counting = 0;
 /* ========
-Debugger plugin, simple demo plugin to console.log some of callbacks
+Runs the debugger plugin to ensure swiping both produces usable results and functions properly
 ======== */
 var myPlugin = {
   name: 'debugger',
@@ -24,6 +29,7 @@ var myPlugin = {
       console.log('init');
       Right = false;
     },
+    //produces results of swiping left or right
     touchMove: function (swiper, touchmove){
         if(!swiper.params.debugger) return;
         direction = swiper.touches.diff;
@@ -38,7 +44,8 @@ var myPlugin = {
         Right = true;
         };
     },
-
+    //Whether swiping left or right this function moves along to the next slide and adds the direction 
+    // result to the responses array
     touchEnd: function(swiper, touchEnd){
       getCode();
        if(Right === true){
@@ -65,6 +72,7 @@ var myPlugin = {
       if (!swiper.params.debugger) return;
       console.log('slideChange', this.previousIndex, '->', this.activeIndex);
     },
+    //Tracks index of slides
     realIndexChange: function (swiper) {
         if (!swiper.params.debugger) return;
       swiper.removeSlide(swiper.activeIndex-1);
@@ -72,7 +80,7 @@ var myPlugin = {
     },
   },
 };
-
+//Converts the numerical dollar sign rating given by API into $ for styling
 function DollarSigns(number){
   switch(number) {
   case 1:
@@ -121,8 +129,7 @@ fetch("http://localhost:8080/restaurantChoices") //NOTE: PROMISES ARE Asyncronou
     priceLevel[i] = temp[4];
 
   }
-  //console.log(address);
-  // console.log(image);
+  // Adds results of JSON files from the API into usable variable names
   document.getElementById("image1").src=image[0];
   document.getElementById("image2").src=image[1];
   document.getElementById("image3").src=image[2];
